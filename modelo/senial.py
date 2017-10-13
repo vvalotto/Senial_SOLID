@@ -12,7 +12,6 @@ class Senial(object):
     -> poner_valor(valor)
     -> obtener_valor(indice)
     -> obtener_tamanio()
-    -> obtener_tamanio()
     """
     
     def __init__(self):
