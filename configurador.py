@@ -3,7 +3,7 @@ Configura la clase que se usara
 """
 from adquisidor.adquisidor import *
 from procesador.procesador import *
-
+from visualizador.visualizador import *
 
 def definir_adquisidor():
     """
@@ -24,6 +24,8 @@ def definir_procesador():
     """
     return ProcesadorAmplificador(4)
 
+def definir_visualizador():
+    return Visualizador()
 
 class Configurador(object):
     """
@@ -33,6 +35,8 @@ class Configurador(object):
     adquisidor = definir_adquisidor()
     # Se configura el tipo de procesador
     procesador = definir_procesador()
+    # Se configura el visualizador
+    visualizador = definir_visualizador()
 
     def __init__(self):
         pass

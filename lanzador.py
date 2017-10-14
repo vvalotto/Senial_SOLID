@@ -11,8 +11,6 @@ import modelo
 
 from configurador import *
 
-from visualizador.visualizador import *
-
 
 class Lanzador:
     """
@@ -74,7 +72,7 @@ class Lanzador:
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
         Visualizador().mostrar_datos(senial_procesada)
-        print("Fin Programa - SRP")
+        print("Fin Programa")
 
 
 if __name__ == "__main__":
