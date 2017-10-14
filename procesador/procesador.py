@@ -1,7 +1,10 @@
 """
 Define la clase procesador de la senial
+Cambio 1:
+Uso de la funcion map para calcular valores de la lista
 """
 from modelo.senial import *
+
 
 class Procesador(object):
     """
@@ -18,8 +21,7 @@ class Procesador(object):
         :return:
         """
         print("Procesando...")
-        for i in range(0, senial.obtener_tamanio()):
-            self._senial_procesada.poner_valor(senial.obtener_valor(i) * 2)
+        self._senial_procesada._valores = list(map(self.funcion_doble, senial._valores))
         return
     
     def obtener_senial_procesada(self):
@@ -28,3 +30,12 @@ class Procesador(object):
         :return:
         """
         return self._senial_procesada
+
+    @staticmethod
+    def funcion_doble(valor):
+        """
+        Funcion que retorna el doble de valor de entrada
+        :param valor:
+        :return:
+        """
+        return valor * 2
