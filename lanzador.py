@@ -58,16 +58,28 @@ class Lanzador:
     @staticmethod
     def ejecutar():
         """
-        Se instancian las clases que participan del procesamiento
+        Programa principal
         """
+
+        '''
+        Se prepara el programa
+        '''
         Lanzador.informar_versiones()
         Lanzador.tecla()
         opcion = Lanzador.seleccionar_procesador()
-        tipo_procesamiento = None
-        parametro = None
 
+        '''
+        Se instancian las clases que participan del procesamiento
+        '''
         mi_adquisidor = Adquisidor(5)
-        mi_procesador = Procesador()
+        if opcion == '1':
+            '''Si es para amplificar pasa el valor a amplificar'''
+            mi_procesador = Procesador(2)
+        elif opcion == '2':
+            '''Si es umbral pasa el valor de umbral'''
+            mi_procesador = Procesador(5)
+        else:
+            mi_procesador = None
 
         os.system("clear")
         print("Incio - Paso 1 - Adquisicion de la senial")
@@ -78,19 +90,17 @@ class Lanzador:
 
         '''Paso 2 - Se procesa la senial adquirida'''
         print("Incio - Paso 2 - Procesamiento")
-        if opcion == '1':
-           tipo_procesamiento = "amplificar"
-           parametro = 2
-        elif opcion == '2':
-            tipo_procesamiento = "umbral"
-            parametro = 5
-        else:
-            print('Sin procesador selecionado')
-            print("Fin Programa - NoOCP")
-            exit()
 
         try:
-            mi_procesador.procesar_senial(senial_adquirida, tipo_procesamiento, parametro)
+            if opcion == '1':
+                mi_procesador.procesar_senial(senial_adquirida)
+            elif opcion == '2':
+                mi_procesador.procesar_senial_con_umbral(senial_adquirida)
+            else:
+                print('Sin procesador selecionado')
+                print("Fin Programa - NoOCP")
+                exit()
+
         except Exception():
             print("Error al procesar")
             print("Fin Programa - NoOCP")
@@ -98,7 +108,6 @@ class Lanzador:
 
         senial_procesada = mi_procesador.obtener_senial_procesada()
         Lanzador.tecla()
-
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
