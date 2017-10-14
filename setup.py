@@ -3,7 +3,7 @@ from codecs import open
 
 setup(
     name='SenialSOLID',
-    version='2.0.1-dev',
+    version='2.1.0',
     description='SenialSOLID: Aplicacion de l Principio SRP',
     author='VV',
     author_email='vvalotto@gmail.com',
