@@ -19,3 +19,9 @@ Requerimiento 2:
 Es necesario agregar un nuevo tipo de procesamiento ya que hay clientes que necesitan valores de
 la señal por debajo de un umbral de valores, que son entregados en un archivo.
 Es una nueva versión del Senial_SOLID, pero mantiene la funcionalidad existente.
+
+Requerimiento 3:
+
+Los valores que corresponden a la señal son manejado como una lista, los desarrolladore están viendo
+que agregar el manejo de la colección de valores de la señal también como una pila y una cola, además
+de una lista.
