@@ -54,6 +54,7 @@ class ProcesadorAmplificador(BaseProcesador):
         """
         print("Procesando...")
         self._senial_procesada._valores = list(map(self._amplificar, senial._valores))
+        self._senial_procesada.tamanio += senial.tamanio
         return
 
     def _amplificar(self, valor):
@@ -85,6 +86,7 @@ class ProcesadorConUmbral(BaseProcesador):
         """
         print("Procesando con umbral")
         self._senial_procesada._valores = list(map(self._funcion_umbral, senial._valores))
+        self._senial_procesada.tamanio += senial.tamanio
         return
 
     def _funcion_umbral(self, valor):
