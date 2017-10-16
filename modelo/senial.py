@@ -103,3 +103,38 @@ class SenialPila(Senial):
                 raise Exception('No hay valores para sacar')
         except Exception as e:
             print('Error ;', e)
+
+
+class SenialCola(Senial):
+    """
+    Clase de tipo Cola que hereda de la clase senial los miembros variables de instancia
+    y extiende el metodo para sacar datos
+    """
+    def __init__(self, tamanio):
+        """
+        Construye la instancia de la estructura cola circular, donde se indica el
+        tamanio de la cola y se inicializan los punteros de la cabeza y cola
+        :param tamanio:
+        :return:
+        """
+        super().__init__(tamanio)
+        self._cabeza = 0
+        self._cola = 0
+        # Se crea la cola vacia pero con lugares para poner valores
+        for i in range(0, tamanio):
+            self._valores.append(None)
+
+    def sacar_valor(self):
+        try:
+            if (self._cabeza != self._cola) or ((self._cabeza == self._cola) and (self._cantidad != 0)):
+                valor = self._valores[self._cabeza]
+                if self._cabeza == (self._tamanio - 1):
+                    self._cabeza = 0
+                else:
+                    self._cabeza += 1
+                self._cantidad -= 1
+                return valor
+            else:
+                raise Exception('No hay valores para sacar')
+        except Exception as e:
+            print('Error ;', e)
