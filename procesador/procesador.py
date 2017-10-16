@@ -1,22 +1,24 @@
 """
 Para OCP
 Se refactoriza la clase de manera de extender otros tipos de
-funciones de procesmiento de datos sin que impacte en los anteriores programas
-o que cambiando solo las clases de alto nivel que pueda "armar" la solucion
+funciones de adquisicion de datos sin que impacte en los anteriores programas
+o que cambiando solo las clases de alto nivel que puedan "armar" la solucion
+
+Se modifica el constructor, se le inyecta es tipo de señal definida para
+la adquisicion
 """
 from abc import ABCMeta, abstractmethod
-from modelo.senial import *
 
 
 class BaseProcesador(metaclass=ABCMeta):
     """
     Clase Abstracta Procesador
     """
-    def __init__(self):
+    def __init__(self, senial):
         """
         Se inicializa con la senial que se va a procesar
         """
-        self._senial_procesada = Senial()
+        self._senial_procesada = senial
         return
 
     @abstractmethod
@@ -37,13 +39,13 @@ class ProcesadorAmplificador(BaseProcesador):
     """
     Clase Procesador Amplificador
     """
-    def __init__(self, amplificacion):
+    def __init__(self, senial, amplificacion):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el valor de amplificacion
         :param umbral:
         :return:
         """
-        BaseProcesador.__init__(self)
+        BaseProcesador.__init__(self, senial)
         self._amplificacion = amplificacion
 
     def procesar(self, senial):
@@ -54,7 +56,7 @@ class ProcesadorAmplificador(BaseProcesador):
         """
         print("Procesando...")
         self._senial_procesada._valores = list(map(self._amplificar, senial._valores))
-        self._senial_procesada.tamanio += senial.tamanio
+        self._senial_procesada._cantidad += len(self._senial_procesada._valores)
         return
 
     def _amplificar(self, valor):
@@ -69,13 +71,13 @@ class ProcesadorConUmbral(BaseProcesador):
     """
     Clase Procesador con Umbral
     """
-    def __init__(self, umbral):
+    def __init__(self, senial, umbral):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el umbral
         :param umbral:
         :return:
         """
-        BaseProcesador.__init__(self)
+        BaseProcesador.__init__(self, senial)
         self._umbral = umbral
 
     def procesar(self, senial):
@@ -86,7 +88,7 @@ class ProcesadorConUmbral(BaseProcesador):
         """
         print("Procesando con umbral")
         self._senial_procesada._valores = list(map(self._funcion_umbral, senial._valores))
-        self._senial_procesada.tamanio += senial.tamanio
+        self._senial_procesada._cantidad += len(self._senial_procesada._valores)
         return
 
     def _funcion_umbral(self, valor):

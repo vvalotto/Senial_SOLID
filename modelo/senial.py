@@ -25,17 +25,21 @@ class Senial(object):
     def fecha_adquisicion(self, valor):
         self._fecha_adquisicion = valor
 
-    @fecha_adquisicion.deleter
-    def fecha_adquisicion(self):
-        del self._fecha_adquisicion
+    @property
+    def cantidad(self):
+        return self._cantidad
+
+    @cantidad.setter
+    def cantidad(self, valor):
+        self._cantidad = valor
 
     @property
     def tamanio(self):
-        return self._cantidad
+        return self._tamanio
 
     @tamanio.setter
     def tamanio(self, valor):
-        self._cantidad = valor
+        self._tamanio = valor
 
     @property
     def valores(self):
@@ -45,7 +49,7 @@ class Senial(object):
     def valores(self, datos):
         self._valores = datos
 
-    def __init__(self):
+    def __init__(self, tamanio=10):
         """
         Constructor: Inicializa la lista de valores vacia
         :return:
@@ -53,6 +57,7 @@ class Senial(object):
         self._valores = []
         self._fecha_adquisicion = None
         self._cantidad = 0
+        self._tamanio = tamanio
         return
 
     def poner_valor(self, valor):
@@ -76,3 +81,25 @@ class Senial(object):
         except Exception as ex:
             print('Error: ', ex.args)
             return None
+
+    def __str__(self):
+        cad = ""
+        cad += "tamanio: " + str(self._tamanio) + "\n"
+        cad += "fecha_adquisicion: " + str(self._fecha_adquisicion)
+        return cad
+
+
+class SenialPila(Senial):
+    """
+    Clase de tipo Pila que hereda de la clase senial los miembros variables de instancia
+    y extiende el metodo para sacar datos
+    """
+    def sacar_valor(self):
+        try:
+            if self._cantidad != 0:
+                self._cantidad -= 1
+                return self._valores[self._cantidad]
+            else:
+                raise Exception('No hay valores para sacar')
+        except Exception as e:
+            print('Error ;', e)

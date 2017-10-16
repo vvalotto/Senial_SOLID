@@ -9,5 +9,5 @@ class Visualizador(object):
     def mostrar_datos(senial):
         print('Mostrar la senial')
         for i in range(0, senial.tamanio):
-            print(senial.obtener_valor(i))
+            print(senial.sacar_valor())
         return
