@@ -13,7 +13,7 @@ def definir_senial_adquirir():
     Define el tipo de estructura para la señal a adquirir
     :return:
     """
-    return Senial(5)
+    return SenialPila(5)
 
 
 def definir_senial_procesar():
@@ -21,7 +21,7 @@ def definir_senial_procesar():
     Define el tipo de estructura para la señal a procesar
     :return:
     """
-    return SenialPila(5)
+    return SenialCola(5)
 
 
 def definir_adquisidor():
