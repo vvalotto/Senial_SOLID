@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.4
 __author__ = 'Victor Valotto'
-__version__ = '6.0.0'
+__version__ = '6.0.1'
 
 """
 LSP - Implementado
@@ -58,6 +58,7 @@ class Lanzador:
         '''
         mi_adquisidor = Configurador.adquisidor
         mi_procesador = Configurador.procesador
+        mi_visualizador = Configurador.visualizador
 
         os.system("clear")
         print("Incio - Paso 1 - Adquisicion de la senial")
@@ -74,7 +75,7 @@ class Lanzador:
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
-        Visualizador().mostrar_datos(senial_procesada)
+        mi_visualizador.mostrar_datos(senial_procesada)
         print("Fin Programa")
 
 
