@@ -1,4 +1,7 @@
 #!/usr/local/bin/python3.4
+__author__ = 'Victor Valotto'
+__version__ = '5.0.0'
+
 """
 Ejemplo de solucion para el SRP, donde las responsabilidades se dividen
 entre diferentes clases separadas en diferentes módulos a implementar.
@@ -37,6 +40,7 @@ class Lanzador:
         print("procesador: " + procesador.__version__)
         print("visualizador: " + visualizador.__version__)
         print("modelo: " + modelo.__version__)
+        print("Senial_SOLID:" + __version__)
 
     @staticmethod
     def ejecutar():

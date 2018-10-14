@@ -1,3 +1,6 @@
+__author__ = 'Victor Valotto'
+__version__ = '1.0.0'
+
 """
 Configura las clases que se usaran en el programa
 Se comporta como un Factory de las clases
