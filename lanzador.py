@@ -62,6 +62,8 @@ class Lanzador:
         mi_adquisidor = Configurador.adquisidor
         mi_procesador = Configurador.procesador
         mi_visualizador = Configurador.visualizador
+        persistidor_adquisicion = Configurador.persistidor_adquisicion
+        persistidor_procesamiento = Configurador.persistidor_procesamiento
 
         os.system("clear")
         print("Incio - Paso 1 - Adquisicion de la senial")
@@ -73,22 +75,36 @@ class Lanzador:
         senial_adquirida.id = int(input('Identificacion (nro entero)'))
         print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
         print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
+
         Lanzador.tecla()
+        print('Se persiste la señal adquirida')
+        persistidor_adquisicion.persistir(senial_adquirida, senial_adquirida.id)
+        print('Señal Guardada')
 
         '''Paso 2 - Se procesa la senial adquirida'''
         print("Incio - Paso 2 - Procesamiento")
         mi_procesador.procesar(senial_adquirida)
         senial_procesada = mi_procesador.obtener_senial_procesada()
+
         Lanzador.tecla()
+        print('Se persiste la señal procesada')
         senial_procesada.comentario = input('Descripcion de la señal procesada:')
         senial_procesada.id = int(input('Identificacion (nro entero)'))
-        Lanzador.tecla()
+        persistidor_procesamiento.persistir(senial_procesada, senial_procesada.id)
+        print('Señal Guardada')
+
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
-        mi_visualizador.mostrar_datos(senial_procesada)
-        print("Fin Programa")
+        adquirida = persistidor_adquisicion.recuperar(senial_adquirida.id)
+        procesada = persistidor_procesamiento.recuperar(senial_procesada.id)
+        mi_visualizador.mostrar_datos(adquirida)
+        print('----->')
+        mi_visualizador.mostrar_datos(procesada)
+        print('----->')
 
+        print("Fin Programa")
+        exit()
 
 if __name__ == "__main__":
     Lanzador().ejecutar()

@@ -1,5 +1,5 @@
 __author__ = 'Victor Valotto'
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 """
 Configura las clases que se usaran en el programa
