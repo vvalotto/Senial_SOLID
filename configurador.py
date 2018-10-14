@@ -8,6 +8,7 @@ Se comporta como un Factory de las clases
 from procesador.procesador import *
 from adquisidor.adquisidor import *
 from visualizador.visualizador import *
+from persistidor.persistidor import *
 from modelo.senial import *
 import os
 
@@ -49,6 +50,11 @@ def definir_procesador():
 def definir_visualizador():
     return Visualizador()
 
+
+def definir_persistidor(recurso):
+    return PersistidorPickle(recurso)
+
+
 class Configurador(object):
     """
     El Configurador es un contenedor de objetos que participan de la solucion
@@ -59,6 +65,10 @@ class Configurador(object):
     procesador = definir_procesador()
     # Se configura el visualizador
     visualizador = definir_visualizador()
+    # Se configura la persitencia para los datos adquiridos
+    persistidor_adquisicion = definir_persistidor('./tmp/datos/adq')
+    # Se configura la persitencia para los datos procesados
+    persistidor_procesamiento = definir_persistidor('./tmp/datos/pro')
 
     def __init__(self):
         pass
