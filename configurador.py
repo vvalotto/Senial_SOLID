@@ -12,6 +12,7 @@ from persistidor.persistidor import *
 from modelo.senial import *
 import os
 
+
 def definir_senial_adquirir():
     """
     Define el tipo de estructura para la señal a adquirir
@@ -46,6 +47,7 @@ def definir_procesador():
     :return:
     """
     return ProcesadorAmplificador(definir_senial_procesar(), 4)
+
 
 def definir_visualizador():
     return Visualizador()

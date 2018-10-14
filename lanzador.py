@@ -14,6 +14,7 @@ import modelo
 
 from configurador import *
 
+from datetime import datetime
 
 class Lanzador:
     """
@@ -67,12 +68,20 @@ class Lanzador:
         '''Paso 1 - Se obtiene la senial'''
         mi_adquisidor.leer_senial()
         senial_adquirida = mi_adquisidor.obtener_senial_adquirida()
+        senial_adquirida.fecha_adquisicion = datetime.now().date()
+        senial_adquirida.comentario = input('Descripcion de la señal:')
+        senial_adquirida.id = int(input('Identificacion (nro entero)'))
+        print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
+        print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
         Lanzador.tecla()
 
         '''Paso 2 - Se procesa la senial adquirida'''
         print("Incio - Paso 2 - Procesamiento")
         mi_procesador.procesar(senial_adquirida)
         senial_procesada = mi_procesador.obtener_senial_procesada()
+        Lanzador.tecla()
+        senial_procesada.comentario = input('Descripcion de la señal procesada:')
+        senial_procesada.id = int(input('Identificacion (nro entero)'))
         Lanzador.tecla()
 
         '''Paso 3 - Se muestran las seniales '''
