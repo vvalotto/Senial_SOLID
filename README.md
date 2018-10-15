@@ -30,3 +30,9 @@ Requerimiento 4:
 
 Las datos adquiridos y procesados deben ser guardados.
 Se deben registrar los eventos de adquisición y guardado para tener una trazabilidad
+
+
+Requerimiento 5:
+
+Refactorizar la solución para que se puedan extender los adquisidores, procesadores, 
+persisitidores sin un gran impacto en el resto de los módulos.

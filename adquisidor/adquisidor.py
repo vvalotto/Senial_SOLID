@@ -1,16 +1,14 @@
 """
-Para OCP
-Se refactoriza la clase de manera de extender otros tipos de
-funciones de adquisicion de datos sin que impacte en los anteriores programas
-o que cambiando solo las clases de alto nivel que puedan "armar" la solucion
+Se agregar el metodo trazar a la clase abstracta
 
-Se modifica el constructor, se le inyecta es tipo de señal definida para
-la adquisicion
+Se extiende un nueva clase Adquisidor Senoidal
 """
 from abc import ABCMeta, abstractmethod
+from utilidades.trazador import *
+import math
 
 
-class BaseAdquisidor(metaclass=ABCMeta):
+class BaseAdquisidor(BaseTrazador, metaclass=ABCMeta):
     """
     Clase Abstracta Adquisidor
     """
@@ -39,6 +37,24 @@ class BaseAdquisidor(metaclass=ABCMeta):
     @abstractmethod
     def _leer_dato_entrada(self):
         pass
+
+    def trazar(self, entidad, accion, mensaje):
+        """
+        Registra un evento asociado a la proceso de adquisicion
+        entidad: clase que genera el evento
+        accion: metodo o funcion en la que se genera el evento
+        mensaje: Comentario
+        """
+        nombre = 'adquisidor_logger.log'
+        try:
+            with open(nombre, 'a') as logger:
+                logger.writelines('------->\n')
+                logger.writelines('Accion: ' + str(accion) + '\n')
+                logger.writelines(str(entidad) + '\n')
+                logger.writelines(str(datetime.datetime.now()) + '\n')
+                logger.writelines(str(mensaje) + '\n')
+        except IOError as eIO:
+            raise eIO
 
 
 class AdquisidorConsola(BaseAdquisidor):
@@ -107,3 +123,31 @@ class AdquisidorArchivo(BaseAdquisidor):
             print('I/O Error: ', IOError.errno)
         except ValueError:
             print('Dato de senial no detectado')
+
+
+class AdquisidorSenoidal(BaseAdquisidor):
+    """
+    Simulador de una entrada de senial senoidal
+    """
+    def __init__(self, senial):
+        BaseAdquisidor.__init__(self, senial)
+        self._valor = 0
+        self._i = 0
+
+    def _leer_dato_entrada(self):
+        self._valor = math.sin((float(self._i) / (float(self._senial.tamanio))) * 2 * 3.14) * 10
+        self._i += 1
+        return self._valor
+
+    def leer_senial(self):
+        print('Lectura de la senial')
+        i = 0
+        try:
+            while i < self._senial.tamanio:
+                self._senial.poner_valor(self._leer_dato_entrada())
+                i += 1
+        except Exception as ex:
+            super().trazar(AdquisidorArchivo,
+                           'leer_senial',
+                           'Error en la carga de datos: ' + str(ex))
+            print('Error en la carga de datos')
