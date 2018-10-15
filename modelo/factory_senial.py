@@ -11,7 +11,7 @@ class FactorySenial(object):
 
         tamanio = int(tamanio)
         senial = None
-        if tipo_senial == 'basica':
+        if tipo_senial == 'lista':
             senial = SenialLista(tamanio)
 
         elif tipo_senial == 'pila':

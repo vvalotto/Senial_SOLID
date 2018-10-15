@@ -49,10 +49,10 @@ class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
         try:
             self.auditar(senial, "Antes de hacer la persistencia")
             self._contexto.persistir(senial, senial.id)
-            self.auditar(senial,  "Se realizó la persistencia")
+            self.auditar(senial,  "Se realizo la persistencia")
         except Exception as ex:
             self.auditar(senial,  "Problema al persistir persistencia")
-            self.trazar(senial, "guardar", ex.with_traceback())
+            self.trazar(senial, "guardar", ex)
             raise ex
         return
 
@@ -66,7 +66,7 @@ class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
         try:
             self.auditar(senial,  "Antes de recuperar la senial")
             senial_recuperada = self._contexto.recuperar(senial, id_senial)
-            self.auditar(senial,  "Se realizó la recuperacion")
+            self.auditar(senial,  "Se realizo la recuperacion")
             return senial_recuperada
         except Exception:
             self.auditar(senial,  "Error al recuperar")

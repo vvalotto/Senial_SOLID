@@ -10,8 +10,9 @@ class FactoryProcesador(object):
     def obtener_procesador(tipo_procesador, senial, param):
         try:
             procesador = None
-            if tipo_procesador == 'amplificador':
-                procesador = ProcesadorAmplificador(senial)
+            if tipo_procesador == 'amplificacion':
+                amplificador = int(param[0])
+                procesador = ProcesadorAmplificador(senial, amplificador)
 
             elif tipo_procesador == 'umbral':
                 umbral = int(param[0])
