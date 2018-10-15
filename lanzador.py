@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.4
 __author__ = 'Victor Valotto'
-__version__ = '7.0.0'
+__version__ = '8.0.0'
 
 """
 LSP - Implementado
@@ -10,6 +10,7 @@ import adquisidor
 import procesador
 import visualizador
 import persistidor
+import utilidades
 import modelo
 
 from configurador import *
@@ -42,6 +43,7 @@ class Lanzador:
         print("procesador: " + procesador.__version__)
         print("visualizador: " + visualizador.__version__)
         print("persistidor: " + persistidor.__version__)
+        print("utilidades: " + utilidades.__version__)
         print("modelo: " + modelo.__version__)
         print("Senial_SOLID:" + __version__)
 
