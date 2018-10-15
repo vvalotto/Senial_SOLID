@@ -2,15 +2,15 @@
 <configuracion>
     <dir_recurso_datos>./tmp/datos</dir_recurso_datos>
     <adquisidor>archivo
-        <param id="dir_entrada_datos">Users/vvalotto/PycharmProjects/Senial_SOLID/adquisidor/datos.txt</param>
+        <param id="dir_entrada_datos">./adquisidor/datos.txt</param>
     </adquisidor>
-    <procesador>amplificacion
-        <param id="amplificador">5</param>
+    <procesador>umbral
+        <param id="umbral">100</param>
     </procesador>
-    <senial_adq>pila
+    <senial_adq>cola
         <tamanio>20</tamanio>
     </senial_adq>
-    <senial_pro>lista
+    <senial_pro>pila
         <tamanio>20</tamanio>
     </senial_pro>
     <contexto>pickle</contexto>
