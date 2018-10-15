@@ -1,13 +1,12 @@
 """
-Modulo que contiene la responsabilidad de guardar las seniales, adquiridas y procesadas
-en algun tipo de almacen de persistencia (archivo plano, xml, serializa, base de dato)
+El contexto define como se implementa la persistencia.Que tipo de almancen
 """
 import os
 import pickle
 from persistidor.mapeador import *
 
 
-class Persistidor(metaclass=ABCMeta):
+class BaseContexto(metaclass=ABCMeta):
     """
     Clase abstract que define la interfaz de la persistencia de datos
     """
@@ -41,13 +40,13 @@ class Persistidor(metaclass=ABCMeta):
         pass
 
 
-class PersistidorPickle(Persistidor):
+class ContextoPickle(BaseContexto):
     """
     Clase de persistidor que persiste un tipo de objeto de manera serializada
     """
     def __init__(self, recurso):
         """
-        Se crea el archivo con el path donde se guardaran los archivos
+        Se crea el archivo con el path donde se guardarán los archivos
         de la entidades a persistir
         :param nombre: Path del repositorio de entidades
         :return:
@@ -55,8 +54,7 @@ class PersistidorPickle(Persistidor):
         try:
             super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso):
-                os.mkdir(recurso)
+            if not os.path.isdir(recurso): os.mkdir(recurso)
         except IOError as eIO:
             raise eIO
 
@@ -94,13 +92,13 @@ class PersistidorPickle(Persistidor):
         return e
 
 
-class PersistidorArchivo(Persistidor):
+class ContextoArchivo(BaseContexto):
     """
     Contexto del recurso de persistencia de tipo archivo
     """
     def __init__(self, recurso):
         """
-        Se crea el archivo con el path donde se guardaran los archivos
+        Se crea el archivo con el path donde se guardarán los archivos
         de la entidades a persistir
         :param nombre: Path del repositorio de entidades
         :return:
@@ -108,10 +106,9 @@ class PersistidorArchivo(Persistidor):
         try:
             super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso):
-                os.mkdir(recurso)
+            if not os.path.isdir(recurso): os.mkdir(recurso)
         except IOError as eIO:
-            raise (eIO)
+            raise eIO
 
     def persistir(self, entidad, nombre_entidad):
         """
