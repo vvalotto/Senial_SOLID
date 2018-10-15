@@ -26,7 +26,7 @@ def definir_senial_procesar():
     Define el tipo de estructura para la señal a procesar
     :return:
     """
-    return SenialCola(5)
+    return SenialLista(5)
 
 
 def definir_adquisidor():
@@ -54,7 +54,7 @@ def definir_visualizador():
 
 
 def definir_persistidor(recurso):
-    return PersistidorPickle(recurso)
+    return PersistidorArchivo(recurso)
 
 
 class Configurador(object):

@@ -96,8 +96,8 @@ class Lanzador:
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
-        adquirida = persistidor_adquisicion.recuperar(senial_adquirida.id)
-        procesada = persistidor_procesamiento.recuperar(senial_procesada.id)
+        adquirida = persistidor_adquisicion.recuperar(senial_adquirida, senial_adquirida.id)
+        procesada = persistidor_procesamiento.recuperar(senial_procesada, senial_procesada.id)
         mi_visualizador.mostrar_datos(adquirida)
         print('----->')
         mi_visualizador.mostrar_datos(procesada)
