@@ -77,22 +77,25 @@ class Lanzador:
         print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
         print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
 
+        repositorio_adquisicion.auditar(senial_adquirida, "Senial Adquirida")
         Lanzador.tecla()
         print('Se persiste la señal adquirida')
         repositorio_adquisicion.guardar(senial_adquirida)
         print('Señal Guardada')
+        repositorio_adquisicion.auditar(senial_adquirida, "Senial Guardada")
 
         '''Paso 2 - Se procesa la senial adquirida'''
         print("Incio - Paso 2 - Procesamiento")
         mi_procesador.procesar(senial_adquirida)
         senial_procesada = mi_procesador.obtener_senial_procesada()
-
+        repositorio_procesamiento.auditar(senial_procesada, "Senial Procesada")
         Lanzador.tecla()
         print('Se persiste la señal procesada')
         senial_procesada.comentario = input('Descripcion de la señal procesada:')
         senial_procesada.id = int(input('Identificacion (nro entero)'))
         repositorio_procesamiento.guardar(senial_procesada)
         print('Señal Guardada')
+        repositorio_procesamiento.auditar(senial_adquirida, "Senial Guardada")
 
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")

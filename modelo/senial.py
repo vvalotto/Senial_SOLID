@@ -108,7 +108,7 @@ class SenialBase(object):
     def __str__(self):
         cad = ""
         cad += 'Tipo: ' + str(type(self)) + '\r\n'
-        cad += 'Id: ' + self._id + '\r\n'
+        cad += 'Id: ' + str(self._id) + '\r\n'
         cad += 'Descripcion: ' + str(self._comentario) + '\r\n'
         cad += 'fecha_adquisicion: ' + str(self._fecha_adquisicion)
         return cad

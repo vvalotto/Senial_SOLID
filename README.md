@@ -29,3 +29,4 @@ de una lista.
 Requerimiento 4:
 
 Las datos adquiridos y procesados deben ser guardados.
+Se deben registrar los eventos de adquisición y guardado para tener una trazabilidad
