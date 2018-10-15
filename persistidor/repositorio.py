@@ -4,7 +4,7 @@ from utilidades.trazador import *
 import datetime
 
 
-class BaseRepositorio(BaseAuditor, BaseTrazador, metaclass=ABCMeta):
+class BaseRepositorio(metaclass=ABCMeta):
     def _init__(self, contexto):
         self._contexto = contexto
     """
@@ -28,7 +28,7 @@ class BaseRepositorio(BaseAuditor, BaseTrazador, metaclass=ABCMeta):
         pass
 
 
-class RepositorioSenial(BaseRepositorio):
+class RepositorioSenial(BaseAuditor, BaseTrazador, BaseRepositorio):
     """
     Definicion del Repositorio de la Entidad Senial
     """
@@ -49,10 +49,10 @@ class RepositorioSenial(BaseRepositorio):
         try:
             self.auditar(senial, "Antes de hacer la persistencia")
             self._contexto.persistir(senial, senial.id)
-            self.auditar(senial,  "Se realizo la persistencia")
+            self.auditar(senial,  "Se realizó la persistencia")
         except Exception as ex:
             self.auditar(senial,  "Problema al persistir persistencia")
-            self.trazar(senial, "guardar", ex)
+            self.trazar(senial, "guardar", ex.with_traceback())
             raise ex
         return
 
@@ -66,7 +66,7 @@ class RepositorioSenial(BaseRepositorio):
         try:
             self.auditar(senial,  "Antes de recuperar la senial")
             senial_recuperada = self._contexto.recuperar(senial, id_senial)
-            self.auditar(senial,  "Se realizo la recuperacion")
+            self.auditar(senial,  "Se realizó la recuperacion")
             return senial_recuperada
         except Exception:
             self.auditar(senial,  "Error al recuperar")

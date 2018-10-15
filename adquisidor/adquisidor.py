@@ -6,6 +6,7 @@ Se extiende un nueva clase Adquisidor Senoidal
 from abc import ABCMeta, abstractmethod
 from utilidades.trazador import *
 import math
+import datetime
 
 
 class BaseAdquisidor(BaseTrazador, metaclass=ABCMeta):

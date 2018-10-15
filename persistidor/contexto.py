@@ -54,7 +54,8 @@ class ContextoPickle(BaseContexto):
         try:
             super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
         except IOError as eIO:
             raise eIO
 
@@ -106,7 +107,8 @@ class ContextoArchivo(BaseContexto):
         try:
             super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
         except IOError as eIO:
             raise eIO
 
