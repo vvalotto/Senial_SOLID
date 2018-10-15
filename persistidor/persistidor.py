@@ -7,30 +7,66 @@ import pickle
 from persistidor.mapeador import *
 
 
-class PersistidorPickle(object):
+class Persistidor(metaclass=ABCMeta):
+    """
+    Clase abstract que define la interfaz de la persistencia de datos
+    """
+    def __init__(self, recurso):
+        """
+        Se crea el contexto, donde el nombre es el recurso fisico donde residen los datos
+        junto con esto se crea el recurso fisico con el nombre
+        :param nombre:
+        :return:
+        """
+        if recurso is None or recurso == "":
+            raise Exception("Nombre de recurso vacio")
+        return
+
+    @property
+    def recurso(self):
+        return self._recurso
+
+    @abstractmethod
+    def persistir(self, entidad, nombre_entidad):
+        """
+        Se identifica a la instancia de la entidad con nombre_entidad y en entidad es el tipo a persistir
+        """
+        pass
+
+    @abstractmethod
+    def recuperar(self, id_entidad, entidad):
+        """
+        Se identifica a la instancia de la entidad con nombre_entidad y en entidad es devuelta por el metodo
+        """
+        pass
+
+
+class PersistidorPickle(Persistidor):
     """
     Clase de persistidor que persiste un tipo de objeto de manera serializada
     """
     def __init__(self, recurso):
         """
-        Se crea el archivo con el path donde se guardarán los archivos
+        Se crea el archivo con el path donde se guardaran los archivos
         de la entidades a persistir
         :param nombre: Path del repositorio de entidades
         :return:
         """
         try:
+            super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
         except IOError as eIO:
-            raise(eIO)
+            raise eIO
 
-    def persistir(self, entidad, nombre_entidad):
+    def persistir(self, entidad, id_entidad):
         """
         Se persiste el objeto (entidad) y se indica el tipo de entidad
         :param: entidad (object)
-        :param: nombre_entidad (string)
+        :param: id_entidad (string)
         """
-        archivo = str(nombre_entidad) + '.pickle'
+        archivo = str(id_entidad) + '.pickle'
         ubicacion = self._recurso + "/" + archivo
         try:
             with open(ubicacion, "wb") as a:
@@ -39,7 +75,7 @@ class PersistidorPickle(object):
             raise eIO
         return
 
-    def recuperar(self, id_entidad):
+    def recuperar(self, entidad, id_entidad):
         """
         Se lee el entidad a tratar
         :param id_entidad
@@ -57,22 +93,25 @@ class PersistidorPickle(object):
             print(eVE)
         return e
 
-class PersistidorArchivo(object):
+
+class PersistidorArchivo(Persistidor):
     """
     Contexto del recurso de persistencia de tipo archivo
     """
     def __init__(self, recurso):
         """
-        Se crea el archivo con el path donde se guardarán los archivos
+        Se crea el archivo con el path donde se guardaran los archivos
         de la entidades a persistir
         :param nombre: Path del repositorio de entidades
         :return:
         """
         try:
+            super().__init__(recurso)
             self._recurso = recurso
-            if not os.path.isdir(recurso): os.mkdir(recurso)
+            if not os.path.isdir(recurso):
+                os.mkdir(recurso)
         except IOError as eIO:
-            raise(eIO)
+            raise (eIO)
 
     def persistir(self, entidad, nombre_entidad):
         """

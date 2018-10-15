@@ -16,6 +16,7 @@ from configurador import *
 
 from datetime import datetime
 
+
 class Lanzador:
     """
     Programa Lanzador
@@ -93,7 +94,6 @@ class Lanzador:
         persistidor_procesamiento.persistir(senial_procesada, senial_procesada.id)
         print('Señal Guardada')
 
-
         '''Paso 3 - Se muestran las seniales '''
         print("Incio - Paso 3 - Mostrar Senial")
         adquirida = persistidor_adquisicion.recuperar(senial_adquirida, senial_adquirida.id)
@@ -105,6 +105,7 @@ class Lanzador:
 
         print("Fin Programa")
         exit()
+
 
 if __name__ == "__main__":
     Lanzador().ejecutar()
