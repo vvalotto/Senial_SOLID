@@ -1,11 +1,12 @@
 from setuptools import setup
 
+
 setup(
     name='SenialSOLID',
-    version='4.1.1',
-    description='SenialSOLID - Paso 5: Aplicacion del Principio OCP - Solo Procesador',
+    version='0.0.1',
+    description='SenialSOLID: Violacion la principio de SRP',
     author='VV',
     author_email='vvalotto@gmail.com',
-    py_modules=['lanzador', 'configurador'],
-    entry_points={'console_scripts': 'lanzador = lanzador:Lanzador.ejecutar'}
+    packages=['senial_solid'],
+    py_modules=['lanzador']
 )

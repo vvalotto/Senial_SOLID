@@ -1,115 +1,39 @@
-#!/usr/local/bin/python3.4
 __author__ = 'Victor Valotto'
-__version__ = '9.0.0'
+__version__ = '0.0.1'
+__date__ = '2021/09/01'
+__author_email__ = 'vvalotto@gmail.com'
 
 """
-LSP - Implementado
+Programa lanzador del ejemplo
 """
-import os
-import adquisidor
-import procesador
-import visualizador
-import persistidor
-import utilidades
-import modelo
 
-from configurador import *
-
-from datetime import datetime
+from senial_solid.lector_senial import LectorSenial
 
 
 class Lanzador:
     """
-    Programa Lanzador
+    Programa Principal
     """
+
     def __init__(self):
         pass
 
     @staticmethod
-    def tecla():
+    def ejecutar() -> None:
         """
-        Funcion que solicita un tecla para continuar
+        Ejecucion del programa lanzador
         """
-        while True:
-            if input('C para continuar> ') == "C":
-                break
-        return
+        senial = LectorSenial(10)
 
-    @staticmethod
-    def informar_versiones():
-        os.system("clear")
-        print("Versiones de los componenetes")
-        print("adquisidor: " + adquisidor.__version__)
-        print("procesador: " + procesador.__version__)
-        print("visualizador: " + visualizador.__version__)
-        print("persistidor: " + persistidor.__version__)
-        print("utilidades: " + utilidades.__version__)
-        print("modelo: " + modelo.__version__)
-        print("Senial_SOLID:" + __version__)
+        print("Iniciando")
+        print("Paso 1 - Adquiere la señal")
+        senial.leer_senial()
 
-    @staticmethod
-    def ejecutar():
-        """
-        Programa principal
-        """
+        print("Paso 2 - Procesa la señal")
+        senial.procesar_senial()
 
-        '''
-        Se prepara el programa
-        '''
-        Lanzador.informar_versiones()
-        Lanzador.tecla()
-
-        '''
-        Se instancian las clases que participan del procesamiento
-        '''
-        mi_adquisidor = Configurador.adquisidor
-        mi_procesador = Configurador.procesador
-        mi_visualizador = Configurador.visualizador
-        repositorio_adquisicion = Configurador.rep_adquisicion
-        repositorio_procesamiento = Configurador.rep_procesamiento
-
-        os.system("clear")
-        print("Incio - Paso 1 - Adquisicion de la senial")
-        '''Paso 1 - Se obtiene la senial'''
-        mi_adquisidor.leer_senial()
-        senial_adquirida = mi_adquisidor.obtener_senial_adquirida()
-        senial_adquirida.fecha_adquisicion = datetime.now().date()
-        senial_adquirida.comentario = input('Descripcion de la señal:')
-        senial_adquirida.id = int(input('Identificacion (nro entero)'))
-        print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
-        print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
-
-        repositorio_adquisicion.auditar(senial_adquirida, "Senial Adquirida")
-        Lanzador.tecla()
-        print('Se persiste la señal adquirida')
-        repositorio_adquisicion.guardar(senial_adquirida)
-        print('Señal Guardada')
-        repositorio_adquisicion.auditar(senial_adquirida, "Senial Guardada")
-
-        '''Paso 2 - Se procesa la senial adquirida'''
-        print("Incio - Paso 2 - Procesamiento")
-        mi_procesador.procesar(senial_adquirida)
-        senial_procesada = mi_procesador.obtener_senial_procesada()
-        repositorio_procesamiento.auditar(senial_procesada, "Senial Procesada")
-        Lanzador.tecla()
-        print('Se persiste la señal procesada')
-        senial_procesada.comentario = input('Descripcion de la señal procesada:')
-        senial_procesada.id = int(input('Identificacion (nro entero)'))
-        repositorio_procesamiento.guardar(senial_procesada)
-        print('Señal Guardada')
-        repositorio_procesamiento.auditar(senial_adquirida, "Senial Guardada")
-
-        '''Paso 3 - Se muestran las seniales '''
-        print("Incio - Paso 3 - Mostrar Senial")
-        adquirida = repositorio_adquisicion.obtener(senial_adquirida, senial_adquirida.id)
-        procesada = repositorio_procesamiento.obtener(senial_procesada, senial_procesada.id)
-        mi_visualizador.mostrar_datos(adquirida)
-        print('----->')
-        mi_visualizador.mostrar_datos(procesada)
-        print('----->')
-
-        print("Fin Programa")
-        exit()
+        print("Paso 3 - Muestra la señal")
+        senial.mostrar_senial()
 
 
 if __name__ == "__main__":
