@@ -1,2 +1,2 @@
 __author__ = 'voval'
-__project__ = 'SeniaSOLID'
+__project__ = 'SeniaSOLIDV2'
