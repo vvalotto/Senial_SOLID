@@ -1,7 +1,7 @@
 """
 Clase que genera la salida y visualizacion del contenido de la señal
 """
-from senial_solid.senial import Senial
+from modelo.senial import Senial
 
 class Visualizador:
 

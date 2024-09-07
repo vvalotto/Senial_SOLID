@@ -1,7 +1,7 @@
 """
 Define la clase procesador de la senial
 """
-from senial_solid.senial import Senial
+from modelo.senial import Senial
 
 
 class Procesador:
@@ -15,7 +15,7 @@ class Procesador:
     def procesar_senial(self, senial) -> None:
         """
         Metodo que realiza el procesamiento de la senial
-        :param senial: a procesar
+        :param senial: Senial a procesar
         """
         print("Procesando...")
         for i in range(0, senial.obtener_tamanio()):
