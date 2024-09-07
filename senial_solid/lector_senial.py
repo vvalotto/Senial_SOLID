@@ -26,7 +26,7 @@ class LectorSenial:
 
     def __leer_dato_entrada(self) -> float:
         """
-        Método privado que se usa para ingresar un solo valor.
+        Metodo privado que se usa para ingresar un solo valor.
         En este caso se ingresa por consola.
         """
         while True:
