@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name='procesador',
-    version='2.0.0',
-    description='Módulo de definición del procesamiento con umbral',
-    long_description='Este módulo define las clases y métodos necesarios para el procesamiento de señales, incluyendo el procesamiento con umbral.',
+    version='3.0.0',
+    description='Resuelve la violación del principio de Open-Closed',
+    long_description='Clase abstracta y clases concretas de procesamiento de señales',
     long_description_content_type='text/markdown',
     author='VV',
     author_email='vvalotto@gmail.com',

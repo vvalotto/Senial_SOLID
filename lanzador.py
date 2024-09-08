@@ -9,7 +9,7 @@ entre diferentes clases separadas en diferentes módulos a implementar.
 """
 import os
 from adquisidor.adquisidor import Adquisidor
-from procesador.procesador import Procesador
+from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
 import adquisidor
 import procesador
@@ -34,7 +34,7 @@ class Lanzador:
         os.system("clear")
 
     @staticmethod
-    def seleccionar_procesador():
+    def seleccionar_procesador()->str:
         """
         Pide al usuario la seleccion del tipo de procesador
         """
@@ -62,9 +62,7 @@ class Lanzador:
 
     @staticmethod
     def ejecutar()->None:
-        """
-        Se instancian las clases que participan del procesamiento
-        """
+        # Se instancian las clases que participan del procesamiento
         Lanzador.informar_versiones()
         Lanzador.tecla()
         opcion = Lanzador.seleccionar_procesador()
@@ -73,10 +71,10 @@ class Lanzador:
         mi_adquisidor = Adquisidor(5)
         if opcion == '1':
             # Si es para amplificar pasa el valor a amplificar
-            mi_procesador = Procesador(2)
+            mi_procesador = ProcesadorAmplificador(2)
         elif opcion == '2':
             # Si es umbral pasa el valor de umbral
-            mi_procesador = Procesador(5)
+            mi_procesador = ProcesadorConUmbral(5)
         else:
             mi_procesador = None
 
@@ -92,17 +90,11 @@ class Lanzador:
         print("Incio - Paso 2 - Procesamiento")
 
         try:
-            if opcion == '1':
-                mi_procesador.procesar_senial(senial_adquirida)
-            elif opcion == '2':
-                mi_procesador.procesar_senial_con_umbral(senial_adquirida)
-            else:
-                print('Sin procesador selecionado')
-                print("Fin Programa - NoOCP")
-                exit()
+            if mi_procesador is not None:
+                mi_procesador.procesar(senial_adquirida)
         except Exception():
             print("Error al procesar")
-            print("Fin Programa - NoOCP")
+            print("Fin Programa - OCP V1")
             exit()
 
         senial_procesada = mi_procesador.obtener_senial_procesada()
@@ -112,7 +104,7 @@ class Lanzador:
         # Paso 3 - Se muestran las seniales
         print("Incio - Paso 3 - Mostrar Senial")
         Visualizador().mostrar_datos(senial_procesada)
-        print("Fin Programa - NoOCP")
+        print("Fin Programa - OCP V1")
 
 
 if __name__ == "__main__":

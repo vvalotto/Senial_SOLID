@@ -54,3 +54,10 @@ class Senial:
         :return: Lista de valores.
         """
         return self._valores
+
+    def poner_valores(self, valores: list) -> None:
+        """
+        Agrega una lista de valores a la lista de la señal
+        :param valores: lista de valores a agregar
+        """
+        self._valores = valores
