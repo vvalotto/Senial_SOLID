@@ -8,8 +8,7 @@ Ejemplo de solucion para el SRP, donde las responsabilidades se dividen
 entre diferentes clases separadas en diferentes módulos a implementar.
 """
 import os
-from adquisidor.adquisidor import Adquisidor
-from visualizador.visualizador import Visualizador
+import os
 from configurador import Configurador
 import adquisidor
 import procesador
@@ -21,7 +20,6 @@ class Lanzador:
     """
     Programa Lanzador
     """
-
 
     @staticmethod
     def tecla()->None:
@@ -39,48 +37,45 @@ class Lanzador:
         Informa las versiones de los componentes
         """
         os.system("clear")
-        print("Versiones de los componenetes")
-        print("adquisidor: " + adquisidor.__version__)
-        print("procesador: " + procesador.__version__)
-        print("visualizador: " + visualizador.__version__)
-        print("modelo: " + modelo.__version__)
+        print("Versiones de los componentes")
+        print(f"adquisidor: {adquisidor.__version__}")
+        print(f"procesador: {procesador.__version__}")
+        print(f"visualizador: {visualizador.__version__}")
+        print(f"modelo: {modelo.__version__}")
 
     @staticmethod
-    def ejecutar() -> None:
-        # Se instancian las clases que participan del procesamiento
+    def ejecutar():
+        """
+        Programa principal
+        """
+
+        # Se prepara el programa
         Lanzador.informar_versiones()
         Lanzador.tecla()
 
+
         # Se instancian las clases que participan del procesamiento
-        mi_adquisidor = Adquisidor(5)
+        mi_adquisidor = Configurador.adquisidor
         mi_procesador = Configurador.procesador
+        mi_visualizador = Configurador.visualizador
 
         os.system("clear")
         print("Incio - Paso 1 - Adquisicion de la senial")
         # Paso 1 - Se obtiene la senial
-        mi_adquisidor.adquirir_senial()
+        mi_adquisidor.leer_senial()
         senial_adquirida = mi_adquisidor.obtener_senial_adquirida()
         Lanzador.tecla()
-        os.system("clear")
 
         # Paso 2 - Se procesa la senial adquirida
         print("Incio - Paso 2 - Procesamiento")
-        try:
-            if mi_procesador is not None:
-                mi_procesador.procesar(senial_adquirida)
-        except Exception():
-            print("Error al procesar")
-            print("Fin Programa - OCP V1")
-            exit()
+        mi_procesador.procesar(senial_adquirida)
         senial_procesada = mi_procesador.obtener_senial_procesada()
         Lanzador.tecla()
-        os.system("clear")
 
         # Paso 3 - Se muestran las seniales
         print("Incio - Paso 3 - Mostrar Senial")
-        Visualizador().mostrar_datos(senial_procesada)
-        print("Fin Programa - OCP V1")
-
+        mi_visualizador.mostrar_datos(senial_procesada)
+        print("Fin Programa - OCP V2")
 
 if __name__ == "__main__":
     Lanzador().ejecutar()
