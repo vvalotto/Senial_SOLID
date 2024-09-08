@@ -1,5 +1,5 @@
 __author__ = 'Victor Valotto'
-__version__ = '2.0.0'
+__version__ = '4.0.0'
 __date__ = '2021/09/01'
 __author_email__ = 'vvalotto@gmail.com'
 
@@ -9,8 +9,8 @@ entre diferentes clases separadas en diferentes módulos a implementar.
 """
 import os
 from adquisidor.adquisidor import Adquisidor
-from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
+from configurador import Configurador
 import adquisidor
 import procesador
 import visualizador
@@ -34,21 +34,6 @@ class Lanzador:
         os.system("clear")
 
     @staticmethod
-    def seleccionar_procesador()->str:
-        """
-        Pide al usuario la seleccion del tipo de procesador
-        """
-        os.system("clear")
-        print("Seleccionar tipo de procesamiento:")
-        print("1 > Valor Doble")
-        print("2 > Umbral")
-        while True:
-            op = input('Opcion: ')
-            if op in ['1', '2']:
-                break
-        return op
-
-    @staticmethod
     def informar_versiones() -> None:
         """
         Informa las versiones de los componentes
@@ -61,22 +46,14 @@ class Lanzador:
         print("modelo: " + modelo.__version__)
 
     @staticmethod
-    def ejecutar()->None:
+    def ejecutar() -> None:
         # Se instancian las clases que participan del procesamiento
         Lanzador.informar_versiones()
         Lanzador.tecla()
-        opcion = Lanzador.seleccionar_procesador()
 
         # Se instancian las clases que participan del procesamiento
         mi_adquisidor = Adquisidor(5)
-        if opcion == '1':
-            # Si es para amplificar pasa el valor a amplificar
-            mi_procesador = ProcesadorAmplificador(2)
-        elif opcion == '2':
-            # Si es umbral pasa el valor de umbral
-            mi_procesador = ProcesadorConUmbral(5)
-        else:
-            mi_procesador = None
+        mi_procesador = Configurador.procesador
 
         os.system("clear")
         print("Incio - Paso 1 - Adquisicion de la senial")
@@ -88,7 +65,6 @@ class Lanzador:
 
         # Paso 2 - Se procesa la senial adquirida
         print("Incio - Paso 2 - Procesamiento")
-
         try:
             if mi_procesador is not None:
                 mi_procesador.procesar(senial_adquirida)
@@ -96,7 +72,6 @@ class Lanzador:
             print("Error al procesar")
             print("Fin Programa - OCP V1")
             exit()
-
         senial_procesada = mi_procesador.obtener_senial_procesada()
         Lanzador.tecla()
         os.system("clear")

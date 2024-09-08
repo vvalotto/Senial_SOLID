@@ -22,7 +22,7 @@ class BaseProcesador(metaclass=ABCMeta):
     @abstractmethod
     def procesar(self, senial):
         """
-        Método abstracto que se implementara para cada tipo de procesamiento
+        Metodo abstracto que se implementara para cada tipo de procesamiento
         """
         pass
 
