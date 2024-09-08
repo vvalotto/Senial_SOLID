@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name='SenialSOLID',
-    version='1.1.0',
-    description='SenialSOLID - Aplicación del Principio SRP - con Módulos compilados separados',
-    long_description='Este proyecto aplica el Principio de Responsabilidad Única (SRP) dividiendo las responsabilidades en diferentes módulos.',
+    version='3.0.0',
+    description='SenialSOLID - Violación del Principio OCP ',
+    long_description='Este proyecto viola el Principio Abierto/Cerrado (OCP), modificando la clase Procesador.',
     long_description_content_type='text/markdown',
     author='VV',
     author_email='vvalotto@gmail.com',
