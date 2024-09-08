@@ -47,3 +47,10 @@ class Senial:
         :return: Tamaño de la lista de valores.
         """
         return len(self._valores)
+
+    def obtener_valores(self) -> list:
+        """
+        Retorna la lista de valores.
+        :return: Lista de valores.
+        """
+        return self._valores
