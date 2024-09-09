@@ -57,6 +57,7 @@ class Senial:
         :param valor: dato de la senial obtenida
         """
         self._valores.append(valor)
+        self._cantidad += 1
 
     def obtener_valor(self, indice: int) -> Any:
         """
@@ -91,3 +92,20 @@ class Senial:
         :param valores: lista de valores a agregar
         """
         self._valores = valores
+
+class SenialPila(Senial):
+    """
+    Clase de tipo Pila que hereda de la clase senial los miembros variables de instancia
+    y extiende el metodo para sacar datos
+    """
+    def sacar_valor(self) -> Any:
+        """
+        Saca un valor de la pila.
+        :return: Valor sacado de la pila.
+        """
+        if self._cantidad != 0:
+            self._cantidad -= 1
+            return self._valores[self._cantidad]
+        else:
+            print('Error: No hay valores para sacar')
+            return None

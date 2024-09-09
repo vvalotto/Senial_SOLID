@@ -4,6 +4,22 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
+from modelo.senial import Senial,SenialPila
+
+def definir_senial_adquirir():
+    """
+    Define el tipo de estructura para la señal a adquirir
+    :return:
+    """
+    return Senial(5)
+
+
+def definir_senial_procesar():
+    """
+    Define el tipo de estructura para la señal a procesar
+    :return:
+    """
+    return SenialPila(5)
 
 def definir_adquisidor():
     """
@@ -14,7 +30,7 @@ def definir_adquisidor():
     - Adquisidor por Archivo
     :return:
     """
-    return AdquisidorArchivo('./adquisidor/senial.txt')
+    return AdquisidorConsola(definir_senial_adquirir())
 
 
 def definir_procesador():
@@ -24,7 +40,7 @@ def definir_procesador():
     Procesador con Umbral
 
     """
-    return ProcesadorAmplificador(2)
+    return ProcesadorAmplificador(definir_senial_procesar(),2)
 
 def definir_visualizador():
     """

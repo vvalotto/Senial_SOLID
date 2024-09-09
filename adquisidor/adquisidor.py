@@ -1,26 +1,21 @@
 """
-Para OCP
-Se refactoriza la clase de manera de extender otros tipos de
-funciones de adquisicion de datos sin que impacte en los anteriores programas
-o que cambiando solo las clases de alto nivel que puedan "armar" la solucion
+Se modifican los constructores de las clases AdquisidorConsola y AdquisidorArchivo
 """
 from abc import ABCMeta, abstractmethod
 from modelo.senial import Senial
-
 
 class BaseAdquisidor(metaclass=ABCMeta):
     """
     Clase Abstracta Adquisidor
     """
-    def __init__(self, valor):
+    def __init__(self, senial: Senial):
         """
         Inicializa el adquisidor con una lista vacia de valores de la senial
         :valor: Tamanio de la coleccion de valores de la senial
         """
-        self._senial = Senial()
-        self._nro_muestra = valor
+        self._senial = senial
 
-    def obtener_senial_adquirida(self):
+    def obtener_senial_adquirida(self) -> Senial:
         """
         Devuelve la lista de valores de la senial adquirida
         :return: señal
@@ -28,7 +23,7 @@ class BaseAdquisidor(metaclass=ABCMeta):
         return self._senial
 
     @abstractmethod
-    def leer_senial(self):
+    def leer_senial(self) -> None:
         """
         Metodo abstracto. Cada adquisidor tiene su propia implementacion
         de la lectura de la senial
@@ -41,7 +36,7 @@ class AdquisidorConsola(BaseAdquisidor):
     Adquisidor de datos desde el teclado
     """
     @staticmethod
-    def _leer_dato_entrada():
+    def _leer_dato_entrada() -> float:
         """
         Lee un dato por teclaso
         :return: dato leido
@@ -52,12 +47,12 @@ class AdquisidorConsola(BaseAdquisidor):
             except ValueError:
                 print('Dato mal ingresado, <enter>')
 
-    def leer_senial(self):
+    def leer_senial(self) -> None:
         """
         llena la coleccion de valores de la senial desde el teclado
         """
         print("Lectura de la senial")
-        for i in range(0, self._nro_muestra):
+        for i in range(0, self._senial.tamanio):
             print(f"Dato nro: {i}")
             self._senial.poner_valor(self._leer_dato_entrada())
 
@@ -67,7 +62,7 @@ class AdquisidorArchivo(BaseAdquisidor):
     Adquisidor de datos desde Archivo
     """
 
-    def __init__(self, ubicacion):
+    def __init__(self, ubicacion: str):
         """
         Inicializa la instancia con la ubicación del archivo a leer
         :param ubicacion: Ubicación del archivo
@@ -79,10 +74,10 @@ class AdquisidorArchivo(BaseAdquisidor):
             raise ValueError('El dato no es una ubicación válida, (No es un nombre de archivo)')
 
     @property
-    def ubicacion(self):
+    def ubicacion(self) -> str:
         return self._ubicacion
 
-    def leer_senial(self):
+    def leer_senial(self) -> None:
         print('Lectura de la senial')
         try:
             with open(self._ubicacion, 'r') as a:

@@ -1,9 +1,8 @@
 """
-Para OCP
-Se refactoriza la clase de manera de extender otros tipos de
-funciones de procesmiento de datos sin que impacte en los anteriores programas
-o que cambiando solo las clases de alto nivel que pueda "armar" la solucion
+Se modifica el archivo procesador.py para que las clases
+ProcesadorAmplificador y ProcesadorConUmbral hereden de BaseProcesador
 """
+
 from abc import ABCMeta, abstractmethod
 from modelo.senial import Senial
 
@@ -12,21 +11,21 @@ class BaseProcesador(metaclass=ABCMeta):
     """
     Clase Abstracta Procesador
     """
-    def __init__(self):
+    def __init__(self, senial: Senial):
         """
         Se inicializa con la senial que se va a procesar
         """
-        self._senial_procesada = Senial()
+        self._senial_procesada = senial
         return
 
     @abstractmethod
-    def procesar(self, senial):
+    def procesar(self, senial) -> None:
         """
         Metodo abstracto que se implementara para cada tipo de procesamiento
         """
         pass
 
-    def obtener_senial_procesada(self):
+    def obtener_senial_procesada(self) -> Senial:
         """
         Devuelve la señal procesada
         """
@@ -37,23 +36,24 @@ class ProcesadorAmplificador(BaseProcesador):
     """
     Clase Procesador Amplificador
     """
-    def __init__(self, amplificacion):
+    def __init__(self, senial: Senial, amplificacion: float):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el valor de amplificacion
         :param amplificacion: Valor de amplificación
         """
-        super().__init__()
+        super().__init__(senial)
         self._amplificacion = amplificacion
 
-    def procesar(self, senial):
+    def procesar(self, senial) -> None:
         """
         Implementa el procesamiento de amplificar cada valor de senial
         :param senial: Señal a procesar
         """
         print("Procesando...")
         self._senial_procesada.poner_valores(list(map(self._amplificar, senial.obtener_valores())))
+        self._senial_procesada.cantidad += len(self._senial_procesada.valores)
 
-    def _amplificar(self, valor):
+    def _amplificar(self, valor) -> float:
         """
         Función que retorna el valor amplificado
         :param valor: Valor de entrada
@@ -66,7 +66,7 @@ class ProcesadorConUmbral(BaseProcesador):
     """
     Clase Procesador con Umbral
     """
-    def __init__(self, umbral):
+    def __init__(self, senial: Senial, umbral: float):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el umbral
         :param umbral: Valor del umbral
@@ -74,15 +74,16 @@ class ProcesadorConUmbral(BaseProcesador):
         super().__init__()
         self._umbral = umbral
 
-    def procesar(self, senial):
+    def procesar(self, senial) -> None:
         """
         Implementa el procesamiento de la señal con umbral
         :param senial: Señal a procesar
         """
         print("Procesando con umbral")
         self._senial_procesada.poner_valores(list(map(self._funcion_umbral, senial.obtener_valores())))
+        self._senial_procesada.cantidad += len(self._senial_procesada.valores)
 
-    def _funcion_umbral(self, valor):
+    def _funcion_umbral(self, valor) -> float:
         """
         Función que filtra valores con un umbral
         :param valor: Valor de entrada
