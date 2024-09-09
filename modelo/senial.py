@@ -51,12 +51,21 @@ class Senial:
     def valores(self, datos: List[float]) -> None:
         self._valores = datos
 
-    def poner_valor(self, valor: float) -> None:
+    def poner_valor(self, valor):
         """
         Agrega dato a la lista de la senial
         :param valor: dato de la senial obtenida
         """
-        self._valores.append(valor)
+        if self._cantidad >= self._tamanio:
+            print('Error: No se pueden poner más datos')
+            return
+
+        if isinstance(self, SenialCola):
+            self._valores[self._cola] = valor
+            self._cola = (self._cola + 1) % self._tamanio
+        else:
+            self._valores.append(valor)
+
         self._cantidad += 1
 
     def obtener_valor(self, indice: int) -> Any:
