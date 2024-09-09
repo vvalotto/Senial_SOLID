@@ -16,7 +16,7 @@ class SenialBase(ABC):
         Constructor: Inicializa la lista de valores vacía.
         :param tamanio: Tamaño inicial de la señal.
         """
-        self._valores: List[]= []
+        self._valores: List = []
         self._fecha_adquisicion: Any = None
         self._cantidad: int = 0
         self._tamanio: int= tamanio
@@ -110,12 +110,93 @@ class SenialBase(ABC):
         return cad
     
 class SenialLista(SenialBase):
-    pass
+    def poner_valor(self, valor: float) -> None:
+        """
+        Agrega un valor al final de la lista de la señal.
+        :param valor: Dato de la señal obtenida.
+        """
+        if self._cantidad >= self._tamanio:
+            print('Error: No se pueden poner más datos')
+            return
+        self._valores.append(valor)
+        self._cantidad += 1
+
+    def sacar_valor(self, indice: int) -> Any:
+        """
+        Saca un valor en una posición cualquiera de la lista de la señal.
+        :param indice: Índice del valor a sacar.
+        :return: Valor sacado de la lista.
+        """
+        if self._cantidad == 0:
+            print('Error: No hay valores para sacar')
+            return None
+        try:
+            valor = self._valores.pop(indice)
+            self._cantidad -= 1
+            return valor
+        except IndexError:
+            print(f'Error: Índice {indice} fuera de rango')
+            return None
 
 class SenialPila(SenialBase):
-    pass
+    def poner_valor(self, valor: float) -> None:
+        """
+        Agrega un valor al final de la pila de la señal.
+        :param valor: Dato de la señal obtenida.
+        """
+        if self._cantidad >= self._tamanio:
+            print('Error: No se pueden poner más datos')
+            return
+        self._valores.append(valor)
+        self._cantidad += 1
+
+    def sacar_valor(self) -> Any:
+        """
+        Saca un valor del final de la pila de la señal.
+        :return: Valor sacado de la pila.
+        """
+        if self._cantidad == 0:
+            print('Error: No hay valores para sacar')
+            return None
+        self._cantidad -= 1
+        return self._valores.pop()
 
 class SenialCola(SenialBase):
-    pass
+    def __init__(self, tamanio: int):
+        """
+        Construye la instancia de la estructura cola circular, donde se indica el
+        tamaño de la cola y se inicializan los punteros de la cabeza y cola.
+        :param tamanio: Tamaño de la cola.
+        """
+        super().__init__(tamanio)
+        self._cabeza: int = 0
+        self._cola: int = 0
+        self._valores: List[Any] = [None] * tamanio
+
+    def poner_valor(self, valor: float) -> None:
+        """
+        Agrega un valor al final de la cola de la señal.
+        :param valor: Dato de la señal obtenida.
+        """
+        if self._cantidad >= self._tamanio:
+            print('Error: No se pueden poner más datos')
+            return
+        self._valores[self._cola] = valor
+        self._cola = (self._cola + 1) % self._tamanio
+        self._cantidad += 1
+
+    def sacar_valor(self) -> Any:
+        """
+        Saca un valor del inicio de la cola de la señal.
+        :return: Valor sacado de la cola.
+        """
+        if self._cantidad == 0:
+            print('Error: No hay valores para sacar')
+            return None
+        valor = self._valores[self._cabeza]
+        self._valores[self._cabeza] = None
+        self._cabeza = (self._cabeza + 1) % self._tamanio
+        self._cantidad -= 1
+        return valor
 
    

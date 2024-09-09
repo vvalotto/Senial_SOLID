@@ -4,14 +4,14 @@ ProcesadorAmplificador y ProcesadorConUmbral hereden de BaseProcesador
 """
 
 from abc import ABCMeta, abstractmethod
-from modelo.senial import Senial
+from modelo.senial import *
 
 
 class BaseProcesador(metaclass=ABCMeta):
     """
     Clase Abstracta Procesador
     """
-    def __init__(self, senial: Senial):
+    def __init__(self, senial: SenialBase):
         """
         Se inicializa con la senial que se va a procesar
         """
@@ -25,7 +25,7 @@ class BaseProcesador(metaclass=ABCMeta):
         """
         pass
 
-    def obtener_senial_procesada(self) -> Senial:
+    def obtener_senial_procesada(self) -> SenialBase:
         """
         Devuelve la señal procesada
         """
@@ -36,7 +36,7 @@ class ProcesadorAmplificador(BaseProcesador):
     """
     Clase Procesador Amplificador
     """
-    def __init__(self, senial: Senial, amplificacion: float):
+    def __init__(self, senial: SenialBase, amplificacion: float):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el valor de amplificacion
         :param amplificacion: Valor de amplificación
@@ -66,7 +66,7 @@ class ProcesadorConUmbral(BaseProcesador):
     """
     Clase Procesador con Umbral
     """
-    def __init__(self, senial: Senial, umbral: float):
+    def __init__(self, senial: SenialBase, umbral: float):
         """
         Sobreescribe el constructor de la clase abstracta para inicializar el umbral
         :param umbral: Valor del umbral

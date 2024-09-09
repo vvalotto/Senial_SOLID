@@ -1,12 +1,12 @@
 """
 Clase que genera la salida y visualizacion del contenido de la señal
 """
-from modelo.senial import Senial, SenialPila
+from modelo.senial import *
 
 
 class Visualizador:
 
-    def mostrar_datos(self, senial: Senial) -> None:
+    def mostrar_datos(self, senial: SenialBase) -> None:
         """
         Muestra los datos de la señal
         :param senial: Señal a mostrar

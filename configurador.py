@@ -4,7 +4,7 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
-from modelo.senial import Senial,SenialPila, SenialCola
+from modelo.senial import *
 
 def definir_senial_adquirir():
     """
@@ -19,7 +19,7 @@ def definir_senial_procesar():
     Define el tipo de estructura para la señal a procesar
     :return:
     """
-    return SenialCola(5)
+    return SenialPila(5)
 
 def definir_adquisidor():
     """

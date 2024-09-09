@@ -2,20 +2,20 @@
 Se modifican los constructores de las clases AdquisidorConsola y AdquisidorArchivo
 """
 from abc import ABCMeta, abstractmethod
-from modelo.senial import Senial
+from modelo.senial import *
 
 class BaseAdquisidor(metaclass=ABCMeta):
     """
     Clase Abstracta Adquisidor
     """
-    def __init__(self, senial: Senial):
+    def __init__(self, senial: SenialBase):
         """
         Inicializa el adquisidor con una lista vacia de valores de la senial
         :valor: Tamanio de la coleccion de valores de la senial
         """
         self._senial = senial
 
-    def obtener_senial_adquirida(self) -> Senial:
+    def obtener_senial_adquirida(self) -> SenialBase:
         """
         Devuelve la lista de valores de la senial adquirida
         :return: señal
