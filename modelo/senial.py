@@ -1,22 +1,25 @@
 """
 Modulo que define la entidad Senial.
 Es considerada una entidad del dominio
-Modificacion: Se agregan miembros de instancias y se definen como propiedades
+
+Modificacion: Se crea un clase abstracta que define todas las interfaces de las
+estructuras de las seniales y resuelve la violacion de los principio OCP y LSP
 """
+from abc import abstractmethod, ABC
 from typing import Any, List
 
 
-class Senial:
+class SenialBase(ABC):
 
     def __init__(self, tamanio: int = 10):
         """
         Constructor: Inicializa la lista de valores vacía.
         :param tamanio: Tamaño inicial de la señal.
         """
-        self._valores: List[float] = []
-        self._fecha_adquisicion = None
-        self._cantidad = 0
-        self._tamanio = tamanio
+        self._valores: List[]= []
+        self._fecha_adquisicion: Any = None
+        self._cantidad: int = 0
+        self._tamanio: int= tamanio
 
     # Propiedades
     @property
@@ -24,7 +27,7 @@ class Senial:
         return self._fecha_adquisicion
 
     @fecha_adquisicion.setter
-    def fecha_adquisicion(self, valor) -> None:
+    def fecha_adquisicion(self, valor: Any) -> None:
         self._fecha_adquisicion = valor
 
     @property
@@ -32,7 +35,7 @@ class Senial:
         return self._cantidad
 
     @cantidad.setter
-    def cantidad(self, valor) -> None:
+    def cantidad(self, valor: int) -> None:
         self._cantidad = valor
 
     @property
@@ -40,7 +43,7 @@ class Senial:
         return self._tamanio
 
     @tamanio.setter
-    def tamanio(self, valor)-> None:
+    def tamanio(self, valor : int)-> None:
         self._tamanio = valor
 
     @property
@@ -51,32 +54,30 @@ class Senial:
     def valores(self, datos: List[float]) -> None:
         self._valores = datos
 
-    def poner_valor(self, valor):
-        """
-        Agrega dato a la lista de la senial
-        :param valor: dato de la senial obtenida
-        """
-        if self._cantidad >= self._tamanio:
-            print('Error: No se pueden poner más datos')
-            return
+    @abstractmethod
+    def poner_valor(self, valor: float) -> None:
+        pass
 
-        if isinstance(self, SenialCola):
-            self._valores[self._cola] = valor
-            self._cola = (self._cola + 1) % self._tamanio
-        else:
-            self._valores.append(valor)
+    @abstractmethod
+    def sacar_valor(self) -> Any:
+        pass
 
-        self._cantidad += 1
+    def limpiar(self) -> None:
+        """
+        Deja a la senial sin valores
+        """
+        self._valores.clear()
+        self._cantidad = 0
+
 
     def obtener_valor(self, indice: int) -> Any:
         """
         Recupera el contenido según el indice
-        :param indice: Indice del valor a recuperar.
-        :return: Valor en el indice especificado.
+        :param indice:
+        :return: Valor
         """
         try:
-            valor = self._valores[indice]
-            return valor
+            return self._valores[indice]
         except IndexError:
             print(f'Error: Índice {indice} fuera de rango')
             return None
@@ -101,51 +102,20 @@ class Senial:
         :param valores: lista de valores a agregar
         """
         self._valores = valores
+        
+    def __str__(self) -> str:
+        cad = ""
+        cad += 'Tipo: ' + str(type(self)) + '\n'
+        cad += 'fecha_adquisicion: ' + str(self._fecha_adquisicion)
+        return cad
+    
+class SenialLista(SenialBase):
+    pass
 
-class SenialPila(Senial):
-    """
-    Clase de tipo Pila que hereda de la clase senial los miembros variables de instancia
-    y extiende el metodo para sacar datos
-    """
-    def sacar_valor(self) -> Any:
-        """
-        Saca un valor de la pila.
-        :return: Valor sacado de la pila.
-        """
-        if self._cantidad != 0:
-            self._cantidad -= 1
-            return self._valores[self._cantidad]
-        else:
-            print('Error: No hay valores para sacar')
-            return None
+class SenialPila(SenialBase):
+    pass
 
-class SenialCola(Senial):
-    """
-    Clase de tipo Cola que hereda de la clase senial los miembros variables de instancia
-    y extiende el metodo para sacar datos
-    """
-    def __init__(self, tamanio: int):
-        """
-        Construye la instancia de la estructura cola circular, donde se indica el
-        tamaño de la cola y se inicializan los punteros de la cabeza y cola.
-        :param tamanio: Tamaño de la cola.
-        """
-        super().__init__(tamanio)
-        self._cabeza = 0
-        self._cola = 0
-        self._valores = [None] * tamanio
+class SenialCola(SenialBase):
+    pass
 
-    def sacar_valor(self) -> Any:
-        """
-        Retira un elemento de la lista ubicado en indice
-        :return: dato extraido
-        """
-        if self._cantidad == 0:
-            print('Error: No hay valores para sacar')
-            return None
-
-        valor = self._valores[self._cabeza]
-        self._valores[self._cabeza] = None
-        self._cabeza = (self._cabeza + 1) % self._tamanio
-        self._cantidad -= 1
-        return valor
+   
