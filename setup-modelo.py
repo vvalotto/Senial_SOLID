@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name='modelo',
-    version='1.0.0',
+    version='2.0.0',
     description='Definición de las entidades',
-    long_description='Este módulo define las entidades del dominio, como la clase Senial.',
+    long_description='Mejora de la definición de la entidad: Propiedades y Lista.',
     long_description_content_type='text/markdown',
     author='VV',
     author_email='vvalotto@gmail.com',

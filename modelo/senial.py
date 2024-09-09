@@ -1,25 +1,55 @@
 """
 Modulo que define la entidad Senial.
 Es considerada una entidad del dominio
+Modificacion: Se agregan miembros de instancias y se definen como propiedades
 """
-from typing import Any
+from typing import Any, List
 
 
 class Senial:
-    """
-    Definicion de la entidad tipo Senial.
-    En este caso es una definicion de una clase concreta.
-    Tiene las funciones:
-    -> poner_valor(valor)
-    -> obtener_valor(indice)
-    -> obtener_tamanio()
-    """
 
-    def __init__(self):
+    def __init__(self, tamanio: int = 10):
         """
-        Constructor: Inicializa la lista de valores vacia
+        Constructor: Inicializa la lista de valores vacía.
+        :param tamanio: Tamaño inicial de la señal.
         """
-        self._valores = []
+        self._valores: List[float] = []
+        self._fecha_adquisicion = None
+        self._cantidad = 0
+        self._tamanio = tamanio
+
+    # Propiedades
+    @property
+    def fecha_adquisicion(self) -> Any:
+        return self._fecha_adquisicion
+
+    @fecha_adquisicion.setter
+    def fecha_adquisicion(self, valor) -> None:
+        self._fecha_adquisicion = valor
+
+    @property
+    def cantidad(self) -> int:
+        return self._cantidad
+
+    @cantidad.setter
+    def cantidad(self, valor) -> None:
+        self._cantidad = valor
+
+    @property
+    def tamanio(self) -> int:
+        return self._tamanio
+
+    @tamanio.setter
+    def tamanio(self, valor)-> None:
+        self._tamanio = valor
+
+    @property
+    def valores(self) -> List[float]:
+        return self._valores
+
+    @valores.setter
+    def valores(self, datos: List[float]) -> None:
+        self._valores = datos
 
     def poner_valor(self, valor: float) -> None:
         """
@@ -37,8 +67,8 @@ class Senial:
         try:
             valor = self._valores[indice]
             return valor
-        except Exception as ex:
-            print('Error: ', ex.args)
+        except IndexError:
+            print(f'Error: Índice {indice} fuera de rango')
             return None
 
     def obtener_tamanio(self) -> int:
@@ -48,14 +78,14 @@ class Senial:
         """
         return len(self._valores)
 
-    def obtener_valores(self) -> list:
+    def obtener_valores(self) -> List[float]:
         """
         Retorna la lista de valores.
         :return: Lista de valores.
         """
         return self._valores
 
-    def poner_valores(self, valores: list) -> None:
+    def poner_valores(self, valores: List[float]) -> None:
         """
         Agrega una lista de valores a la lista de la señal
         :param valores: lista de valores a agregar
