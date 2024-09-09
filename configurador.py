@@ -4,7 +4,7 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
-from modelo.senial import Senial,SenialPila
+from modelo.senial import Senial,SenialPila, SenialCola
 
 def definir_senial_adquirir():
     """
