@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='adquisidor',
-    version='1.0.0',
+    version='2.1.0',
     description='Módulo de definición de la adquisición',
     long_description='Este módulo define las clases y métodos necesarios para la adquisición de señales.',
     long_description_content_type='text/markdown',

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='modelo',
-    version='2.0.0',
+    version='3.0.0',
     description='Definición de las entidades',
     long_description='Mejora de la definición de la entidad: Propiedades y Lista.',
     long_description_content_type='text/markdown',

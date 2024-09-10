@@ -1,5 +1,5 @@
 __author__ = 'Victor Valotto'
-__version__ = '4.0.0'
+__version__ = '6.0.0'
 __date__ = '2021/09/01'
 __author_email__ = 'vvalotto@gmail.com'
 
