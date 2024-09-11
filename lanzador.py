@@ -3,6 +3,8 @@ __version__ = '7.0.0'
 __date__ = '2021/09/01'
 __author_email__ = 'vvalotto@gmail.com'
 
+from modelo.senial import SenialBase
+
 """
 Ejemplo de solucion para el SRP, donde las responsabilidades se dividen
 entre diferentes clases separadas en diferentes módulos a implementar.
@@ -13,7 +15,7 @@ import procesador
 import visualizador
 import persistidor
 import modelo
-from configurador import Configurador
+from configurador import Configurador, definir_senial_adquirir, definir_senial_procesar
 from datetime import datetime
 
 class Lanzador:
@@ -66,10 +68,10 @@ class Lanzador:
         mi_adquisidor.leer_senial()
         senial_adquirida = mi_adquisidor.obtener_senial_adquirida()
         senial_adquirida.fecha_adquisicion = datetime.now().date()
-        senial_adquirida.comentario = input('Descripción de la señal:')
-        senial_adquirida.id = int(input('Identificación (nro entero): '))
-        print(f'Fecha de lectura: {senial_adquirida.fecha_adquisicion}')
-        print(f'Cantidad de valores obtenidos: {senial_adquirida.cantidad}')
+        senial_adquirida.comentario = input('Descripcion de la señal:')
+        senial_adquirida.id = int(input('Identificacion (nro entero)'))
+        print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
+        print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
 
         Lanzador.tecla()
         print('Se persiste la señal adquirida')
@@ -90,10 +92,10 @@ class Lanzador:
 
         # Paso 3 - Se muestran las seniales
         print("Inicio - Paso 3 - Mostrar Señales")
-        adquirida = persistidor_adquisicion.recuperar(str(senial_adquirida.id))
+        adquirida = persistidor_adquisicion.recuperar(definir_senial_adquirir(), senial_adquirida.id)
         print('Señal adquirida----->')
         mi_visualizador.mostrar_datos(adquirida)
-        procesada = persistidor_procesamiento.recuperar(str(senial_procesada.id))
+        procesada = persistidor_procesamiento.recuperar(definir_senial_procesar(), senial_procesada.id)
         print('Señal procesada----->')
         mi_visualizador.mostrar_datos(procesada)
 

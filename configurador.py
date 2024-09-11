@@ -4,7 +4,7 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
-from persistidor.persistidor import PersistidorPickle
+from persistidor.persistidor import PersistidorPickle, PersistidorArchivo
 from modelo.senial import *
 
 def definir_senial_adquirir():
@@ -12,7 +12,7 @@ def definir_senial_adquirir():
     Define el tipo de estructura para la señal a adquirir
     :return:
     """
-    return SenialPila(5)
+    return SenialPila(10)
 
 
 def definir_senial_procesar():
@@ -20,7 +20,7 @@ def definir_senial_procesar():
     Define el tipo de estructura para la señal a procesar
     :return:
     """
-    return SenialPila(5)
+    return SenialPila(10)
 
 def definir_adquisidor():
     """
@@ -57,7 +57,7 @@ def definir_persistidor(recurso):
 
     :return: Instancia de PersistidorPickle
     """
-    return PersistidorPickle(recurso)
+    return PersistidorArchivo(recurso)
 
 class Configurador(object):
     """
