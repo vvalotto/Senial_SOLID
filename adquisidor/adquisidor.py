@@ -1,14 +1,14 @@
 """
 Se modifican los constructores de las clases AdquisidorConsola y AdquisidorArchivo
 """
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from modelo.senial import *
 
 class BaseAdquisidor(metaclass=ABCMeta):
     """
     Clase Abstracta Adquisidor
     """
-    def __init__(self, senial: SenialBase):
+    def __init__(self, senial):
         """
         Inicializa el adquisidor con una lista vacia de valores de la senial
         :valor: Tamanio de la coleccion de valores de la senial
@@ -62,12 +62,12 @@ class AdquisidorArchivo(BaseAdquisidor):
     Adquisidor de datos desde Archivo
     """
 
-    def __init__(self, ubicacion: str):
+    def __init__(self, ubicacion: str, senial):
         """
         Inicializa la instancia con la ubicación del archivo a leer
         :param ubicacion: Ubicación del archivo
         """
-        super().__init__(0)
+        super().__init__(senial)
         if isinstance(ubicacion, str):
             self._ubicacion = ubicacion
         else:

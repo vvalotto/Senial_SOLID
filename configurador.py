@@ -4,6 +4,7 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
+from persistidor.persistidor import PersistidorPickle
 from modelo.senial import *
 
 def definir_senial_adquirir():
@@ -11,7 +12,7 @@ def definir_senial_adquirir():
     Define el tipo de estructura para la señal a adquirir
     :return:
     """
-    return SenialCola(5)
+    return SenialPila(5)
 
 
 def definir_senial_procesar():
@@ -30,7 +31,7 @@ def definir_adquisidor():
     - Adquisidor por Archivo
     :return:
     """
-    return AdquisidorConsola(definir_senial_adquirir())
+    return AdquisidorArchivo('./adquisidor/senial.txt' ,definir_senial_adquirir())
 
 
 def definir_procesador():
@@ -50,6 +51,14 @@ def definir_visualizador():
     """
     return Visualizador()
 
+def definir_persistidor(recurso):
+    """
+    Define el persistidor a utilizar.
+
+    :return: Instancia de PersistidorPickle
+    """
+    return PersistidorPickle(recurso)
+
 class Configurador(object):
     """
     El Configurador es un contenedor de objetos que participan de la solucion
@@ -60,3 +69,7 @@ class Configurador(object):
     procesador = definir_procesador()
     # Se configura el visualizador
     visualizador = definir_visualizador()
+    # Se configura la persitencia para los datos adquiridos
+    persistidor_adquisicion = definir_persistidor('./tmp/datos/adq')
+    # Se configura la persitencia para los datos procesados
+    persistidor_procesamiento = definir_persistidor('./tmp/datos/pro')

@@ -16,10 +16,28 @@ class SenialBase(ABC):
         Constructor: Inicializa la lista de valores vacía.
         :param tamanio: Tamaño inicial de la señal.
         """
+        self._id: int = 0
+        self._comentario: str = ''
         self._valores: List = []
         self._fecha_adquisicion: Any = None
         self._cantidad: int = 0
         self._tamanio: int= tamanio
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, valor):
+        self._id = valor
+
+    @property
+    def comentario(self):
+        return self._comentario
+
+    @comentario.setter
+    def comentario(self, valor):
+        self._comentario = valor
 
     # Propiedades
     @property
@@ -106,6 +124,8 @@ class SenialBase(ABC):
     def __str__(self) -> str:
         cad = ""
         cad += 'Tipo: ' + str(type(self)) + '\n'
+        cad += 'id: ' + str(self._id) + '\n'
+        cad += 'comentario: ' + str(self._comentario) + '\n'
         cad += 'fecha_adquisicion: ' + str(self._fecha_adquisicion)
         return cad
     
