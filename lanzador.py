@@ -3,8 +3,6 @@ __version__ = '7.0.0'
 __date__ = '2021/09/01'
 __author_email__ = 'vvalotto@gmail.com'
 
-from modelo.senial import SenialBase
-
 """
 Ejemplo de solucion para el SRP, donde las responsabilidades se dividen
 entre diferentes clases separadas en diferentes módulos a implementar.
@@ -72,16 +70,19 @@ class Lanzador:
         senial_adquirida.id = int(input('Identificacion (nro entero)'))
         print('Fecha de lectura: {0}'.format(senial_adquirida.fecha_adquisicion))
         print('Cantidad de valores obtenidos {0}'.format(senial_adquirida.cantidad))
+        repositorio_adquisicion.auditar(senial_adquirida, "Senial Adquirida")
 
         Lanzador.tecla()
         print('Se persiste la señal adquirida')
         repositorio_adquisicion.guardar(senial_adquirida)
         print('Señal Guardada')
+        repositorio_adquisicion.auditar(senial_adquirida, "Senial Guardada")
 
         # Paso 2 - Se procesa la senial adquirida
         print("Inicio - Paso 2 - Procesamiento")
         mi_procesador.procesar(senial_adquirida)
         senial_procesada = mi_procesador.obtener_senial_procesada()
+        repositorio_procesamiento.auditar(senial_procesada, "Senial Procesada")
 
         Lanzador.tecla()
         print('Se persiste la señal procesada')
@@ -89,6 +90,7 @@ class Lanzador:
         senial_procesada.id = int(input('Identificación (nro entero): '))
         repositorio_procesamiento.guardar(senial_procesada)
         print('Señal Procesada Guardada')
+        repositorio_procesamiento.auditar(senial_procesada, "Senial Guardada")
 
         # Paso 3 - Se muestran las seniales
         print("Inicio - Paso 3 - Mostrar Señales")

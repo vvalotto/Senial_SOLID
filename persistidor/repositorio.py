@@ -4,7 +4,7 @@ de las entidades
 """
 from abc import ABC, abstractmethod
 from typing import Any
-
+import datetime
 
 class BaseRepositorio(ABC):
     """
@@ -29,11 +29,31 @@ class BaseRepositorio(ABC):
     def obtener(self, entidad: str, id_entidad: str) -> Any:
         """
         Obtiene una entidad por su identificador
+        :param entidad: Tipo de la entidad
         :param id_entidad: Identificador de la entidad
         :return: Entidad recuperada
         """
         pass
 
+    @abstractmethod
+    def auditar(self, entidad, auditoria):
+        """
+        Realiza el registro de auditoría sobre la entidad indicada
+        :param entidad: Entidad a auditar
+        :param auditoria: Información de auditoría
+        """
+        pass
+
+    @abstractmethod
+    def trazar(self, entidad, acción, mensaje):
+        """
+        Realiza la traza del evento ocurrido sobre la entidad y con el mensaje de
+        traza correspondiente
+        :param entidad: Entidad a trazar
+        :param accion: Acción realizada
+        :param mensaje: Mensaje de traza
+        """
+        pass
 
 class RepositorioSenial(BaseRepositorio):
     """
@@ -69,6 +89,43 @@ class RepositorioSenial(BaseRepositorio):
             print(f"Error al obtener la señal: {e}")
             raise
 
+    def auditar(self, senial, auditoria):
+        """
+        Realiza el registro de auditoría sobre la señal indicada
+        :param senial: Señal a auditar
+        :param auditoria: Información de auditoría
+        """
+        nombre = 'auditor.log'
+        try:
+            with open(nombre, 'a') as auditor:
+                auditor.writelines('------->\n')
+                auditor.writelines(str(senial) + '\n')
+                auditor.writelines(str(datetime.datetime.now()) + '\n')
+                auditor.writelines(str(auditoria) + '\n')
+        except IOError as eIO:
+            print(f"Error al auditar la señal: {eIO}")
+            raise
+
+    def trazar(self, senial, accion, mensaje):
+        """
+        Realiza la traza del evento ocurrido sobre la señal y con el mensaje de
+        traza correspondiente
+        :param senial: Señal a trazar
+        :param accion: Acción realizada
+        :param mensaje: Mensaje de traza
+        """
+        nombre = 'logger.log'
+        try:
+            with open(nombre, 'a') as logger:
+                logger.writelines('------->\n')
+                logger.writelines('Accion: ' + str(accion))
+                logger.writelines(str(senial) + '\n')
+                logger.writelines(str(datetime.datetime.now()) + '\n')
+                logger.writelines(str(mensaje) + '\n')
+        except IOError as eIO:
+            print(f"Error al trazar la señal: {eIO}")
+            raise
+
 class RepositorioUsuario(BaseRepositorio):
     """
     Repositorio para gestionar la persistencia de usuarios
@@ -102,3 +159,22 @@ class RepositorioUsuario(BaseRepositorio):
         except Exception as e:
             print(f"Error al obtener el usuario: {e}")
             raise
+
+    def auditar(self, entidad, auditoria):
+        """
+        Realiza el registro de auditoría sobre el usuario indicado
+        :param usuario: Usuario a auditar
+        :param auditoria: Información de auditoría
+        """
+        raise ("Auditar, Metodo No implementado")
+
+
+    def trazar(self, entidad, acción, mensaje):
+        """
+        Realiza la traza del evento ocurrido sobre el usuario y con el mensaje de
+        raza correspondiente
+        :param usuario: Usuario a trazar
+        :param accion: Acción realizada
+        :param mensaje: Mensaje de traza
+        """
+        raise NotImplementedError("Método no implementado")
