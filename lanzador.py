@@ -12,6 +12,7 @@ import adquisidor
 import procesador
 import visualizador
 import persistidor
+import supervisor
 import modelo
 from configurador import *
 from datetime import datetime
@@ -42,6 +43,7 @@ class Lanzador:
         print(f"procesador: {procesador.__version__}")
         print(f"visualizador: {visualizador.__version__}")
         print(f"persistidor: {persistidor.__version__}")
+        print(f"supervisor: {supervisor.__version__}")
         print(f"modelo: {modelo.__version__}")
 
     @staticmethod
