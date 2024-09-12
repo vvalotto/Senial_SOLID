@@ -5,10 +5,10 @@ en algun tipo de almacen de persistencia (archivo plano, xml, base de dato)
 import os
 import pickle
 from abc import ABC, abstractmethod
-from persistidor.mapeador import *
+from persistidor.mapeador import MapeadorArchivo
 from typing import Any
 
-class Persistidor(ABC):
+class BaseContexto(ABC):
     """
     Clase abstract que define la interfaz de la persistencia de datos
     """
@@ -16,7 +16,7 @@ class Persistidor(ABC):
         """
         Se crea el contexto, donde el nombre es el recurso fisico donde residen los datos
         junto con esto se crea el recurso fisico con el nombre
-        :param nombre:
+        :param recurso: Path del repositorio de entidades.
         """
         if not recurso:
             raise ValueError("Nombre de recurso vacío")
@@ -42,7 +42,7 @@ class Persistidor(ABC):
         """
         pass
 
-class PersistidorPickle(Persistidor):
+class ContextoPickle(BaseContexto):
     """
     Clase de persistidor que persiste un tipo de objeto de manera serializada
     """
@@ -76,7 +76,7 @@ class PersistidorPickle(Persistidor):
             print(f"Error al recuperar la entidad: {e}")
             return None
 
-class PersistidorArchivo(Persistidor):
+class ContextoArchivo(BaseContexto):
     """
     Contexto del recurso de persistencia de tipo archivo
     """

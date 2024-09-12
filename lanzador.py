@@ -15,7 +15,7 @@ import procesador
 import visualizador
 import persistidor
 import modelo
-from configurador import Configurador, definir_senial_adquirir, definir_senial_procesar
+from configurador import *
 from datetime import datetime
 
 class Lanzador:
@@ -59,8 +59,8 @@ class Lanzador:
         mi_adquisidor = Configurador.adquisidor
         mi_procesador = Configurador.procesador
         mi_visualizador = Configurador.visualizador
-        persistidor_adquisicion = Configurador.persistidor_adquisicion
-        persistidor_procesamiento = Configurador.persistidor_procesamiento
+        repositorio_adquisicion = Configurador.rep_adquisicion
+        repositorio_procesamiento = Configurador.rep_procesamiento
 
         os.system("clear")
         print("Inicio - Paso 1 - Adquisicion de la senial")
@@ -75,7 +75,7 @@ class Lanzador:
 
         Lanzador.tecla()
         print('Se persiste la señal adquirida')
-        persistidor_adquisicion.persistir(senial_adquirida, str(senial_adquirida.id))
+        repositorio_adquisicion.guardar(senial_adquirida)
         print('Señal Guardada')
 
         # Paso 2 - Se procesa la senial adquirida
@@ -87,15 +87,15 @@ class Lanzador:
         print('Se persiste la señal procesada')
         senial_procesada.comentario = input('Descripción de la señal procesada:')
         senial_procesada.id = int(input('Identificación (nro entero): '))
-        persistidor_procesamiento.persistir(senial_procesada, str(senial_procesada.id))
+        repositorio_procesamiento.guardar(senial_procesada)
         print('Señal Procesada Guardada')
 
         # Paso 3 - Se muestran las seniales
         print("Inicio - Paso 3 - Mostrar Señales")
-        adquirida = persistidor_adquisicion.recuperar(definir_senial_adquirir(), senial_adquirida.id)
+        adquirida = repositorio_adquisicion.obtener(definir_senial_adquirir(), senial_adquirida.id)
         print('Señal adquirida----->')
         mi_visualizador.mostrar_datos(adquirida)
-        procesada = persistidor_procesamiento.recuperar(definir_senial_procesar(), senial_procesada.id)
+        procesada = repositorio_procesamiento.obtener(definir_senial_procesar(), senial_procesada.id)
         print('Señal procesada----->')
         mi_visualizador.mostrar_datos(procesada)
 

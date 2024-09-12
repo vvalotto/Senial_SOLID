@@ -4,7 +4,8 @@ Configura la clase que se usara
 from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
 from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
 from visualizador.visualizador import Visualizador
-from persistidor.persistidor import PersistidorPickle, PersistidorArchivo
+from persistidor.contexto import ContextoArchivo, ContextoPickle
+from persistidor.repositorio import RepositorioSenial
 from modelo.senial import *
 
 def definir_senial_adquirir():
@@ -20,7 +21,7 @@ def definir_senial_procesar():
     Define el tipo de estructura para la señal a procesar
     :return:
     """
-    return SenialPila(10)
+    return SenialLista(10)
 
 def definir_adquisidor():
     """
@@ -41,7 +42,7 @@ def definir_procesador():
     Procesador con Umbral
 
     """
-    return ProcesadorAmplificador(definir_senial_procesar(),2)
+    return ProcesadorAmplificador(definir_senial_procesar(),10)
 
 def definir_visualizador():
     """
@@ -51,25 +52,36 @@ def definir_visualizador():
     """
     return Visualizador()
 
-def definir_persistidor(recurso):
+def definir_contexto(recurso):
     """
-    Define el persistidor a utilizar.
+    Los contexto son:
+    Almancenar en archivos txt
+    Almacenar en archivos pickle
+    :param recurso:
+    :return:
+    """
+    return ContextoArchivo(recurso)
 
-    :return: Instancia de PersistidorPickle
-    """
-    return PersistidorArchivo(recurso)
+def definir_repositorio(contexto):
+    return RepositorioSenial(contexto)
 
 class Configurador(object):
     """
     El Configurador es un contenedor de objetos que participan de la solucion
     """
+    #Configura los contextos de datos
+    ctx_datos_adquisicion = definir_contexto('./tmp/datos/adq')
+    ctx_datos_procesamiento = definir_contexto('./tmp/datos/pro')
+
+    #Configura los repositorios de las entidades a usar
+    rep_adquisicion = definir_repositorio(ctx_datos_adquisicion)
+    rep_procesamiento = definir_repositorio(ctx_datos_procesamiento)
+
+    # Configura los adquisidores, procesadores y visualizadores
     # Se configura el tipo de adquisidor
     adquisidor = definir_adquisidor()
     # Se configura el tipo de procesador
     procesador = definir_procesador()
     # Se configura el visualizador
     visualizador = definir_visualizador()
-    # Se configura la persitencia para los datos adquiridos
-    persistidor_adquisicion = definir_persistidor('./tmp/datos/adq')
-    # Se configura la persitencia para los datos procesados
-    persistidor_procesamiento = definir_persistidor('./tmp/datos/pro')
+

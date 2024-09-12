@@ -130,6 +130,7 @@ class SenialBase(ABC):
         return cad
     
 class SenialLista(SenialBase):
+
     def poner_valor(self, valor: float) -> None:
         """
         Agrega un valor al final de la lista de la señal.
@@ -141,7 +142,7 @@ class SenialLista(SenialBase):
         self._valores.append(valor)
         self._cantidad += 1
 
-    def sacar_valor(self, indice: int) -> Any:
+    def sacar_valor(self) -> Any:
         """
         Saca un valor en una posición cualquiera de la lista de la señal.
         :param indice: Índice del valor a sacar.
@@ -151,7 +152,7 @@ class SenialLista(SenialBase):
             print('Error: No hay valores para sacar')
             return None
         try:
-            valor = self._valores.pop(indice)
+            valor = self._valores.pop(0)
             self._cantidad -= 1
             return valor
         except IndexError:
@@ -191,7 +192,7 @@ class SenialCola(SenialBase):
         super().__init__(tamanio)
         self._cabeza: int = 0
         self._cola: int = 0
-        self._valores: List[Any] = [None] * tamanio
+        self._valores = []
 
     def poner_valor(self, valor: float) -> None:
         """
