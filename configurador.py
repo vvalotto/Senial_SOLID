@@ -1,10 +1,10 @@
 """
 Configura la clase que se usara
 """
-from adquisidor.adquisidor import AdquisidorConsola, AdquisidorArchivo
-from procesador.procesador import ProcesadorAmplificador, ProcesadorConUmbral
+from adquisidor.adquisidor import *
+from procesador.procesador import *
 from visualizador.visualizador import Visualizador
-from persistidor.contexto import ContextoArchivo, ContextoPickle
+from persistidor.contexto import *
 from persistidor.repositorio import RepositorioSenial
 from modelo.senial import *
 
@@ -32,7 +32,8 @@ def definir_adquisidor():
     - Adquisidor por Archivo
     :return:
     """
-    return AdquisidorArchivo('./adquisidor/senial.txt' ,definir_senial_adquirir())
+    return AdquisidorSenoidal(definir_senial_adquirir())
+
 
 
 def definir_procesador():
