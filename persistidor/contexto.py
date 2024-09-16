@@ -61,7 +61,7 @@ class ContextoPickle(BaseContexto):
         except IOError as e:
             print(f"Error al guardar la entidad: {e}")
 
-    def recuperar(self, id_entidad: str, entidad: Any) -> Any:
+    def recuperar(self, entidad: Any, id_entidad: str) -> Any:
         """
         Se lee la entidad a tratar.
         :param id_entidad: Identificador de la entidad a recuperar.
@@ -99,7 +99,7 @@ class ContextoArchivo(BaseContexto):
         except IOError as e:
             print(f"Error al guardar la entidad: {e}")
 
-    def recuperar(self, entidad, id_entidad):
+    def recuperar(self, entidad: Any, id_entidad: str) -> Any:
         """
         Obtiene la entidad guardada.
         :param id_entidad: Identificación de la entidad a recuperar.

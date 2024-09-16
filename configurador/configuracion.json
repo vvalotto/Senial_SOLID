@@ -1,0 +1,28 @@
+ {
+    "configuracion": {
+        "directorio_datos": "./tmp/datos",
+        "adquisidor": {
+            "parametros": {
+                "id": " ",
+                "text": " "
+            },
+            "tipo": "Senoidal"
+        },
+        "procesador": {
+            "parametros": {
+                "id": "Amplicacion",
+                "text": "10"
+            },
+            "tipo": "Amplificador"
+        },
+        "senial_adq": {
+            "tamanio": "20",
+            "tipo": "Pila"
+        },
+        "senial_pro": {
+            "tamanio": "20",
+            "tipo": "Lista"
+        },
+        "contexto": "pickle"
+    }
+}

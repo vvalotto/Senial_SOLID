@@ -1,6 +1,6 @@
 __author__ = 'Victor Valotto'
-__version__ = '7.0.0'
-__date__ = '2021/09/01'
+__version__ = '8.0.0'
+__date__ = '2024/09/17'
 __author_email__ = 'vvalotto@gmail.com'
 
 """
@@ -14,7 +14,10 @@ import visualizador
 import persistidor
 import supervisor
 import modelo
-from configurador import *
+import configurador
+
+from configurador.configurador import Configurador
+
 from datetime import datetime
 
 class Lanzador:
@@ -44,6 +47,7 @@ class Lanzador:
         print(f"visualizador: {visualizador.__version__}")
         print(f"persistidor: {persistidor.__version__}")
         print(f"supervisor: {supervisor.__version__}")
+        print(f"configurador: {configurador.__version__}")
         print(f"modelo: {modelo.__version__}")
 
     @staticmethod
@@ -96,10 +100,10 @@ class Lanzador:
 
         # Paso 3 - Se muestran las seniales
         print("Inicio - Paso 3 - Mostrar Señales")
-        adquirida = repositorio_adquisicion.obtener(definir_senial_adquirir(), senial_adquirida.id)
+        adquirida = repositorio_adquisicion.obtener(Configurador.senial_adquirir, senial_adquirida.id)
         print('Señal adquirida----->')
         mi_visualizador.mostrar_datos(adquirida)
-        procesada = repositorio_procesamiento.obtener(definir_senial_procesar(), senial_procesada.id)
+        procesada = repositorio_procesamiento.obtener(Configurador.senial_procesar, senial_procesada.id)
         print('Señal procesada----->')
         mi_visualizador.mostrar_datos(procesada)
 

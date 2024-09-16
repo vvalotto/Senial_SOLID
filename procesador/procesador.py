@@ -71,7 +71,7 @@ class ProcesadorConUmbral(BaseProcesador):
         Sobreescribe el constructor de la clase abstracta para inicializar el umbral
         :param umbral: Valor del umbral
         """
-        super().__init__()
+        super().__init__(senial)
         self._umbral = umbral
 
     def procesar(self, senial) -> None:
